@@ -49,7 +49,9 @@
   				
   			</td>
   			<td class="other">
-  				<div><a href="http://stockhtm.finance.qq.com/sstock/ggcx/<?php echo $stockCode; ?>.shtml" target="_blank">详细</a></div>
+  				<div class="bt"><a href="http://stockhtm.finance.qq.com/sstock/ggcx/<?php echo $stockCode; ?>.shtml" target="_blank">详细</a></div>
+  				<div class="bt"><a href="#" target="_blank">动态</a></div>
+  				<div class="bt"><a href="#" target="_blank">设置</a></div>
   			</td>
   		</tr>  		
   	</table>

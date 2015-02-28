@@ -1,0 +1,11 @@
+@charset "utf-8";
+html,body {margin:0px; padding:0px; height:100%; font:12px tahoma,arial,simsun;}
+div {width:100%;}
+.warpper {height:100%;}
+.summary {height:2%; background-color:#ccc;}
+.stock_list {height:98%; display:inline-block;}
+.stock_block {width:33%; height:33%; border:solid 1px #ccc; float:left;}
+.stock {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
+.stock_summary {height:22px; line-height:22px;}
+.stock_summary span {margin:0 10px;}
+.stock_graph {}

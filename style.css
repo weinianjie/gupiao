@@ -8,4 +8,7 @@ div {width:100%;}
 .stock {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .stock_summary {height:22px; line-height:22px;}
 .stock_summary span {margin:0 10px;}
-.stock_graph {}
+.stock_detail .map {width:280px;}
+.stock_detail .map .kmap {width:280px; height:140px;}
+.stock_detail .deal {}
+.stock_detail .other {width:36px; text-align:center;}

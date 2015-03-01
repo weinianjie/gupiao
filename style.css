@@ -1,18 +1,19 @@
 @charset "utf-8";
 html,body {margin:0px; padding:0px; height:100%; font:12px tahoma,arial,simsun;}
-div {width:100%;}
-a {text-decoration:none; outline:0; blr:expression(this.onFocus=this.blur())}
+a {text-decoration:none; outline:0;}
 a:hover {text-decoration: none}
-.warpper {height:100%;}
-.summary {height:2%; line-height:20px; background-color:#ccc;}
-.summary span {margin:0 10px;}
-.stock_list {height:98%; display:inline-block;}
-.stock_block {width:33%; height:33%; border:solid 1px #ccc; float:left;}
-.stock {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
-.stock_summary {height:22px; line-height:22px;}
-.stock_summary span {margin:0 10px;}
-.stock_detail .map {width:280px;}
-.stock_detail .map .kmap {width:280px; height:140px;}
-.stock_detail .deal {}
-.stock_detail .other {width:36px; text-align:center;}
-.stock_detail .other .bt {margin:8px 0;}
+img {border:none;}
+table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
+.up {background-color:rgb(111,214,99);}
+.down {background-color:rgb(244,113,142);}
+.summary {height:18px; line-height:18px; text-align:center;}
+.summary span {margin:0 4px;}
+.stock_list {display:inline-block; width:100%; height:97%;}
+.stock_block {width:33%; height:33%; float:left; border:solid 1px #ccc; overflow:hidden;}
+.stock_block .detail {width:100%; height:90%;}
+.stock_block .detail .map {width:280px; height:192px;}
+.stock_block .detail .map .limit {height:96px; overflow:hidden;}
+.stock_block .detail .map .limit img {width:100%; height:150px;}
+.stock_block .detail .deal {}
+.stock_block .detail .other {width:36px; text-align:center;}
+.stock_block .detail .other .bt {margin:8px 0;}

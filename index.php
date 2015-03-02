@@ -8,32 +8,46 @@
     <script type="text/javascript" src="main.js"></script>
   </head>
   <body>
-  	<div class="summary dapan">
+  	<div class="summary">
+  		<span class="dapan"></span>
+  		<a href="javascript:void(0);" id="t_d">T-D</a>
+  		<!--<a href="javascript:void(0);">T-D</a>-->
   	</div>
 		<div class="stock_list">
+			<div class="basic_info">
+			</div>
 			<?php
-				$stockList = array("000333","000651","002190","000768","002594","000650","000952","000417","002336");
+				$stockList = array("000333","000651","002190","002594","000650","000952","000417","002336");
 				foreach($stockList as $stockCode){
 					$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
 			?>
 					<div class="stock_block" id="s_<?php echo $stockId; ?>">
-						<div class="summary gegu"></div>
+						<div class="summary">
+							<span class="gegu"></span>
+						</div>
 						<table border="1" class="detail">
 							<tr>
-								<td class="map">
+								<td class="map" colspan="2">
 									<div class="limit">
-										<img class="tkmap" src="http://image.sinajs.cn/newchart/min/n/<?php echo $stockId; ?>.gif" />
-									</div>
-									<div class="limit">
-										<img class="dkmap" src="http://image.sinajs.cn/newchart/daily/n/<?php echo $stockId; ?>.gif" />
-									</div>
+										<img class="tkmap" src="" />
+										<img class="dkmap hide" src="http://image.sinajs.cn/newchart/daily/n/<?php echo $stockId; ?>.gif" />
+									</div>									
 								</td>
-								<td class="deal"></td>
-								<td class="other">
+								<td class="deal" rowspan="2"></td>
+								<td class="other" rowspan="2">
 				  				<div class="bt"><a href="http://stockhtm.finance.qq.com/sstock/ggcx/<?php echo $stockCode; ?>.shtml" target="_blank">详细</a></div>
 				  				<div class="bt"><a href="#" target="_blank">动态</a></div>
 				  				<div class="bt"><a href="#" target="_blank">设置</a></div>
 								</td>
+							</tr>
+							<tr>
+								<td class="today_flow">
+									<div class="pillar m1"><div class="word"></div><div class="view v1"></div></div>
+									<div class="pillar m2"><div class="word"></div><div class="view v2"></div></div>
+									<div class="pillar m3"><div class="word"></div><div class="view v1"></div></div>
+									<div class="pillar m4"><div class="word"></div><div class="view v2"></div></div>
+								</td>
+								<td class="five_flow"></td>
 							</tr>
 						</table>
 					</div>

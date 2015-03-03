@@ -16,15 +16,16 @@ table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .stock_block .detail .map {width:280px; height:96px;}
 .stock_block .detail .map .limit{width:100%; height:96px; overflow:hidden;}
 .stock_block .detail .map .limit img {width:100%; height:150px;}
-.stock_block .detail .deal {}
-.stock_block .detail .other {width:36px; text-align:center;}
-.stock_block .detail .other .bt {margin:8px 0;}
-.stock_block .detail .today_flow {width:220px; text-align:center; position:relative;}
+.stock_block .detail .today_flow {width:220px; text-align:center; position:relative; vertical-align:top;}
+.stock_block .detail .today_flow .extends {border-bottom:solid 1px rgb(128, 128, 128);}
 .stock_block .detail .today_flow .pillar {width:42px; position:absolute; bottom:-1px;}
 .stock_block .detail .today_flow .m1 {left:6px;}
 .stock_block .detail .today_flow .m2 {left:54px;}
-.stock_block .detail .today_flow .m3 {left:124px;}
-.stock_block .detail .today_flow .m4 {left:172px;}
+.stock_block .detail .today_flow .m3 {left:126px;}
+.stock_block .detail .today_flow .m4 {left:174px;}
 .stock_block .detail .today_flow .pillar .v1 {border:solid 1px black; background:#D44340;}
 .stock_block .detail .today_flow .pillar .v2 {border:solid 1px black; background:#63B06B;}
-.stock_block .detail .five_flow {width:60px; text-align:right; line-height:20px;}
+.stock_block .detail .money_flow {width:60px; text-align:right; line-height:18px;}
+.stock_block .detail .deal {}
+.stock_block .detail .other {width:36px; text-align:center; display:none;}
+.stock_block .detail .other .bt {margin:8px 0;}

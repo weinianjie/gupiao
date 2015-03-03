@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">	
   <head>
-    <title>金钱宝</title>
+    <title>股哥</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -42,12 +42,16 @@
 							</tr>
 							<tr>
 								<td class="today_flow">
+									<div class="summary extends">1</div>
 									<div class="pillar m1"><div class="word"></div><div class="view v1"></div></div>
 									<div class="pillar m2"><div class="word"></div><div class="view v2"></div></div>
 									<div class="pillar m3"><div class="word"></div><div class="view v1"></div></div>
 									<div class="pillar m4"><div class="word"></div><div class="view v2"></div></div>
 								</td>
-								<td class="five_flow"></td>
+								<td class="money_flow">
+									<div class="total_value"></div>
+									<div class="five_flow"></div>
+								</td>
 							</tr>
 						</table>
 					</div>

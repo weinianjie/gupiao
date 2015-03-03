@@ -52,7 +52,7 @@ function fastData() {
 				eval("var qqArr = v_" + stockArr[i] + ".split('~')");
 				if(qqArr && qqArr.length > 0) {
 					var msClass = qqArr[32] >= 0? "up" : "down";
-					var summary_html = "<span>" + qqArr[1] + "(" + qqArr[2] + ")</span>";
+					var summary_html = "<span><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank'>" + qqArr[1] + "</a>(" + qqArr[2] + ")</span>";
 					summary_html += "<span>昨:" + qqArr[4] + "</span>";
 					summary_html += "<span>开:" + qqArr[5] + "</span>";
 					summary_html += "<span>当:" + qqArr[3] + "</span>";

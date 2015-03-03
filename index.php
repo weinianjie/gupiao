@@ -12,7 +12,7 @@
   	<div class="summary">
   		<span class="dapan"></span>
   		<span class="dapan_flow"></span>
-  		<a href="javascript:void(0);" id="t_d">T-D</a>
+  		<a href="javascript:void(0);" class="bt" id="t_d">切换K图</a>
   		<!--<a href="javascript:void(0);">T-D</a>-->
   	</div>
 		<div class="stock_list">
@@ -40,11 +40,6 @@
 									</div>									
 								</td>
 								<td class="deal" rowspan="2"></td>
-								<td class="other" rowspan="2">
-				  				<div class="bt"><a href="http://stockhtm.finance.qq.com/sstock/ggcx/<?php echo $stockCode; ?>.shtml" target="_blank">详细</a></div>
-				  				<div class="bt"><a href="#" target="_blank">动态</a></div>
-				  				<div class="bt"><a href="#" target="_blank">设置</a></div>
-								</td>
 							</tr>
 							<tr>
 								<td class="today_flow">

@@ -11,12 +11,15 @@ table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .hide {display:none;}
 .summary {height:18px; line-height:18px;}
 .summary span {margin:0 4px;}
-.summary a {float:right; margin-right:16px;}
+.summary .bt {float:right; margin-right:16px;}
 .stock_list {display:inline-block; width:100%; height:97%;}
 .basic_info {display:inline-block; line-height:22px;}
 .basic_info .info {width:25%; height:100%; float:left; overflow:hidden;}
 .basic_info .info .extends {border-bottom:solid 1px rgb(128, 128, 128); text-align:center;}
-.basic_info .info ul {margin:4px;}
+.basic_info .info ul {margin:4px; display:inline-block;}
+.basic_info .info ul li {width:100%; float:left;}
+.basic_info .info ul .sname {float:left;}
+.basic_info .info ul .flow {float:right;}
 .stock_block, .basic_info {width:33%; height:33%; float:left; border:solid 1px #ccc; overflow:hidden;}
 .stock_block .detail {width:100%; height:93%;}
 .stock_block .detail .map {width:280px; height:96px;}
@@ -33,5 +36,3 @@ table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .stock_block .detail .today_flow .pillar .v2 {border:solid 1px black; background:#63B06B;}
 .stock_block .detail .money_flow {width:60px; text-align:right; line-height:18px;}
 .stock_block .detail .deal {}
-.stock_block .detail .other {width:36px; text-align:center; display:none;}
-.stock_block .detail .other .bt {margin:8px 0;}

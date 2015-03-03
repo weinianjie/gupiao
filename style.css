@@ -2,6 +2,8 @@
 html,body {margin:0px; padding:0px; height:100%; font:12px tahoma,arial,simsun;}
 a {text-decoration:none; outline:0;}
 a:hover {text-decoration: none}
+ul,li {margin:0px; padding:0px;}
+li {list-style: none}
 img {border:none;}
 table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .up {background-color:rgb(111,214,99);}
@@ -11,6 +13,10 @@ table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .summary span {margin:0 4px;}
 .summary a {float:right; margin-right:16px;}
 .stock_list {display:inline-block; width:100%; height:97%;}
+.basic_info {display:inline-block; line-height:22px;}
+.basic_info .info {width:25%; height:100%; float:left; overflow:hidden;}
+.basic_info .info .extends {border-bottom:solid 1px rgb(128, 128, 128); text-align:center;}
+.basic_info .info ul {margin:4px;}
 .stock_block, .basic_info {width:33%; height:33%; float:left; border:solid 1px #ccc; overflow:hidden;}
 .stock_block .detail {width:100%; height:93%;}
 .stock_block .detail .map {width:280px; height:96px;}

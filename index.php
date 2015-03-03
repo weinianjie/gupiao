@@ -4,17 +4,23 @@
     <title>股哥</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="static.data.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>    
     <script type="text/javascript" src="main.js"></script>
   </head>
   <body>
   	<div class="summary">
   		<span class="dapan"></span>
+  		<span class="dapan_flow"></span>
   		<a href="javascript:void(0);" id="t_d">T-D</a>
   		<!--<a href="javascript:void(0);">T-D</a>-->
   	</div>
 		<div class="stock_list">
 			<div class="basic_info">
+				<div class="info"></div>
+				<div class="info" style="background-color:#eee;"></div>
+				<div class="info"></div>
+				<div class="info" style="background-color:#eee;"></div>
 			</div>
 			<?php
 				$stockList = array("000333","000651","002190","002594","000650","000952","000417","002336");

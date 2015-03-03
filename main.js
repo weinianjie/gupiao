@@ -1,6 +1,8 @@
 var stockArr = new Array();
-var qq_base_url = "http://qt.gtimg.cn/?q=s_sh000001,s_sz399001";
-var qq_flow_url = "http://qt.gtimg.cn/?q=";
+var qq_base_url = "http://qt.gtimg.cn/?q=s_sh000001,s_sz399001";//大盘和个股数据
+var qq_flow_gegu_url = "http://qt.gtimg.cn/?q=";//个股资金动态
+var qq_flow_hangye_url = "http://stock.gtimg.cn/data/view/flow.php?t=2";//行业资金动态
+var qq_flow_dapan_url = "http://stock.gtimg.cn/data/view/flow.php?t=1"//全股资金动态
 
 //var a = ((("37.79" - "37.15") / "37.15" * 100) + "_").substr(0,4);
 //alert(a);
@@ -11,7 +13,7 @@ $(document).ready(function(){
 		stockId = $(this).attr("id").split("_")[1];
 		stockArr.push(stockId);
 		qq_base_url += "," + stockId;
-		qq_flow_url += ",ff_" + stockId;
+		qq_flow_gegu_url += ",ff_" + stockId;
 	});
 	
 	// 切换分时图和日K线图
@@ -22,9 +24,11 @@ $(document).ready(function(){
 	
 	
 	fastData();
-	setInterval("fastData()", 5000);
+	//setInterval("fastData()", 3000);
+	mediumData();
+	//setInterval("mediumData()", 15001);	
 	slowData();
-	setInterval("slowData()", 60000);	
+	//setInterval("slowData()", 30001);	
 });
 
 // 快数据
@@ -55,26 +59,26 @@ function fastData() {
 					summary_html += "<span>高:" + qqArr[33] + "</span>";
 					summary_html += "<span>低:" + qqArr[34] + "</span>";
 					summary_html += "<span>" + qqArr[32] + "%</span>";
-					$(".gegu").eq(i).html(summary_html).parent(".summary").removeClass("up").removeClass("down").addClass(msClass);
-					$(".extends").eq(i).html("<span>净:" + qqArr[46] + "</span><span>盈:" + qqArr[39] + "</span>");
-					$(".total_value").eq(i).html("<span>总:" + (qqArr[45] + "").split(".")[0] + "亿</span><span>流:" + (qqArr[44] + "").split(".")[0] + "亿</span>");
+					$(".stock_block .gegu").eq(i).html(summary_html).parent(".summary").removeClass("up").removeClass("down").addClass(msClass);
+					$(".today_flow .extends").eq(i).html("<span>净:" + qqArr[46] + "</span><span>盈:" + qqArr[39] + "</span>");
+					$(".money_flow .total_value").eq(i).html("<span>总:" + (qqArr[45] + "").split(".")[0] + "亿</span><span>流:" + (qqArr[44] + "").split(".")[0] + "亿</span>");
 				}
 			}
 		}
 	});
 }
 
-// 慢数据
-function slowData() {
+// 中数据
+function mediumData() {
 	// 柱状图高度数据初始化
 	var box_height = $(".today_flow").height();
 	var now = new Date();
 	if(now.getHours() < 13){box_height = box_height/3*2;}// 上午的盘取2/3高度
 	box_height = box_height/3*2;// 最大值高度设置为box高度的2/3
 	
-	$.ajax({url: qq_flow_url, dataType:"script", cache:true, success:function(){
+	$.ajax({url: qq_flow_gegu_url, dataType:"script", cache:false, success:function(){
 			for(var i=0;i<stockArr.length;i++){
-				eval("var qqArr = v_ff_" + stockArr[i] + ".split('~')");				
+				eval("var qqArr = v_ff_" + stockArr[i] + ".split('~')");
 				if(qqArr && qqArr.length > 0) {
 					// 当日流动柱状图
 					var i_max = Math.max(qqArr[2], qqArr[3], qqArr[5], qqArr[6]);
@@ -103,4 +107,37 @@ function slowData() {
 			}
 		}
 	});
+	
+	// 行业资金流向
+	$.ajax({url: qq_flow_hangye_url, dataType:"script", cache:false, success:function(){
+			var qqArr = v_s_boardzhuli.split('^');
+			if(qqArr && qqArr.length >=8){
+				var html1 = "<ul><li class='extends'>主力流入</li>";
+				var html2 = "<ul><li class='extends'>主力流出</li>";
+				for(var i=0;i<10;i++){
+					var qqArrX = qqArr[i].split("~");
+					var qqArrY = qqArr[qqArr.length-1-i].split("~");
+					console.info(global_data_hangye["hy"+qqArrX[0]]);
+					html1 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArrX[0] + "' target='_blank'>" + global_data_hangye["hy"+qqArrX[0]] + "</a></span><span class='flow'>" + (qqArrX[4]/10000).toFixed(2) + "亿</span></li>";
+					html2 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArrY[0] + "' target='_blank'>" + global_data_hangye["hy"+qqArrY[0]] + "</a></span><span class='flow'>" + (qqArrY[4]/10000).toFixed(2) + "亿</span></li>";
+				}
+				html1 += "</ul>";
+				html2 += "</ul>";
+				$(".basic_info .info").eq(2).html(html1);
+				$(".basic_info .info").eq(3).html(html2);
+			}
+		}
+	});		
+	
+	// 全股资金流向
+	$.ajax({url: qq_flow_dapan_url, dataType:"script", cache:false, success:function(){
+			var qqArr = v_funds_dapan.split('~');			
+			$(".dapan_flow").html("全股资金:" + ((qqArr[2]/1 + qqArr[5]/1)/10000 + "").split(".")[0] + "亿");
+		}
+	});
+}
+
+// 慢数据
+function slowData() {
+	
 }

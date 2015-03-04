@@ -1,8 +1,9 @@
 var stockArr = new Array();
 var qq_base_url = "http://qt.gtimg.cn/?q=s_sh000001,s_sz399001";//大盘和个股数据
 var qq_flow_gegu_url = "http://qt.gtimg.cn/?q=";//个股资金动态
-var qq_flow_hangye_url = "http://stock.gtimg.cn/data/view/flow.php?t=2";//行业资金动态
 var qq_flow_dapan_url = "http://stock.gtimg.cn/data/view/flow.php?t=1"//全股资金动态
+var qq_hangye_sort_url = "http://qt.gtimg.cn/?q=bkhz_Ind_inc,bkhz_Ind_fi";//行业资金和涨跌排行
+var qq_hangye_detail_url = "http://qt.gtimg.cn/?q=";
 
 //var a = ((("37.79" - "37.15") / "37.15" * 100) + "_").substr(0,4);
 //alert(a);
@@ -24,9 +25,9 @@ $(document).ready(function(){
 	
 	
 	fastData();
-	setInterval("fastData()", 3000);
+	//setInterval("fastData()", 3000);
 	mediumData();
-	setInterval("mediumData()", 15001);	
+	//setInterval("mediumData()", 15001);	
 	slowData();
 	//setInterval("slowData()", 30001);	
 });
@@ -108,31 +109,53 @@ function mediumData() {
 		}
 	});
 	
-	// 行业资金流向
-	$.ajax({url: qq_flow_hangye_url, dataType:"script", cache:false, success:function(){
-			var qqArr = v_s_boardzhuli.split('^');
-			if(qqArr && qqArr.length >=8){
-				var html1 = "<ul><li class='extends'>主力流入</li>";
-				var html2 = "<ul><li class='extends'>主力流出</li>";
-				for(var i=0;i<8;i++){
-					var qqArrX = qqArr[i].split("~");
-					var qqArrY = qqArr[qqArr.length-1-i].split("~");
-					console.info(global_data_hangye["hy"+qqArrX[0]]);
-					html1 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArrX[0] + "' target='_blank'>" + global_data_hangye["hy"+qqArrX[0]] + "</a></span><span class='flow'>" + (qqArrX[4]/10000).toFixed(2) + "亿</span></li>";
-					html2 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArrY[0] + "' target='_blank'>" + global_data_hangye["hy"+qqArrY[0]] + "</a></span><span class='flow'>" + (qqArrY[4]/10000).toFixed(2) + "亿</span></li>";
-				}
-				html1 += "</ul>";
-				html2 += "</ul>";
-				$(".basic_info .info").eq(2).html(html1);
-				$(".basic_info .info").eq(3).html(html2);
-			}
-		}
-	});		
-	
 	// 全股资金流向
 	$.ajax({url: qq_flow_dapan_url, dataType:"script", cache:false, success:function(){
 			var qqArr = v_funds_dapan.split('~');			
 			$(".dapan_flow").html("全股进出:" + ((qqArr[2]/1 + qqArr[5]/1)/10000 + "").split(".")[0] + "亿");
+		}
+	});	
+	
+	// 行业涨跌和资金
+	$.ajax({url: qq_hangye_sort_url, dataType:"script", cache:false, success:function(){
+			var zhangdieArr = v_bkhz_Ind_inc.split('~');
+			var zijinArr = v_bkhz_Ind_fi.split('~');
+			var url_param = "";
+			for(var i=0;i<=8;i++){
+				if(url_param.indexOf(zhangdieArr[i]) == -1){
+					url_param += "bkhz" + zhangdieArr[i] + ",";
+				}
+				if(url_param.indexOf(zhangdieArr[zhangdieArr.length-1-i]) == -1){
+					url_param += "bkhz" + zhangdieArr[zhangdieArr.length-1-i] + ",";
+				}				
+				if(url_param.indexOf(zijinArr[i]) == -1){
+					url_param += "bkhz" + zijinArr[i] + ",";
+				}
+				if(url_param.indexOf(zijinArr[zijinArr.length-1-i]) == -1){
+					url_param += "bkhz" + zijinArr[zijinArr.length-1-i] + ",";
+				}				
+			}
+			$.ajax({url: qq_hangye_detail_url + url_param, dataType:"script", cache:false, success:function(){
+					var html0 = "<ul><li class='extends'>行业涨幅榜</li>";
+					var html1 = "<ul><li class='extends'>行业跌幅榜</li>";
+					var html2 = "<ul><li class='extends'>主力流入榜</li>";
+					var html3 = "<ul><li class='extends'>主力流出榜</li>";						
+					for(var i=0;i<=8;i++){
+						eval("var qqArr0 = v_bkhz" + zhangdieArr[i] + ".split('~')");
+						eval("var qqArr1 = v_bkhz" + zhangdieArr[zhangdieArr.length-1-i] + ".split('~')");
+						eval("var qqArr2 = v_bkhz" + zijinArr[i] + ".split('~')");
+						eval("var qqArr3 = v_bkhz" + zijinArr[zijinArr.length-1-i] + ".split('~')");
+						html1 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArr0[0] + "' target='_blank'>" + qqArr0[1] + "</a></span><span class='sdata'>" + qqArr0[8] + "%</span></li>";
+						html0 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArr1[0] + "' target='_blank'>" + qqArr1[1] + "</a></span><span class='sdata'>" + qqArr1[8] + "%</span></li>";
+						html3 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArr2[0] + "' target='_blank'>" + qqArr2[1] + "</a></span><span class='sdata'>" + (qqArr2[15]/10000).toFixed(2) + "亿</span></li>";
+						html2 += "<li><span class='sname'><a href='http://stockapp.finance.qq.com/mstats/?id=" + qqArr3[0] + "' target='_blank'>" + qqArr3[1] + "</a></span><span class='sdata'>" + (qqArr3[15]/10000).toFixed(2) + "亿</span></li>";
+					}
+					$(".basic_info .info").eq(0).html(html0 + "</ul>");
+					$(".basic_info .info").eq(1).html(html1 + "</ul>");
+					$(".basic_info .info").eq(2).html(html2 + "</ul>");
+					$(".basic_info .info").eq(3).html(html3 + "</ul>");
+				}
+			});
 		}
 	});
 }

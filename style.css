@@ -21,7 +21,7 @@ table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .basic_info .info ul {margin:4px; height:100%;}
 .basic_info .info ul li {width:100%; height:11%; float:left;}
 .basic_info .info ul li .sname {float:left;}
-.basic_info .info ul li .flow {float:right;}
+.basic_info .info ul li .sdata {float:right;}
 .stock_block .detail {width:100%; height:92%;}
 .stock_block .detail .map {width:280px; height:96px;}
 .stock_block .detail .map .limit{width:100%; height:96px; overflow:hidden;}

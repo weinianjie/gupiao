@@ -3,15 +3,20 @@
   <head>
     <title>股哥</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta property="qc:admins" content="3404475667615266375" />
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <script type="text/javascript" src="static.data.js"></script>
-    <script type="text/javascript" src="jquery.min.js"></script>    
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" charset="utf-8"></script>-->
+    <script type="text/javascript" src="2.js"></script>
     <script type="text/javascript" src="main.js"></script>
   </head>
   <body>
   	<div class="summary" style="border-bottom:solid 1px #ccc;">
   		<span class="dapan"></span>
   		<span class="dapan_flow"></span>
+<!--  		<span id="qqLoginBtn"></span>-->
+  		<a href="javascript:void(0);" class="bt" id="qq_login">登录</a>
+  		<a href="javascript:void(0);" class="bt" id="test">test</a>
   		<a href="javascript:void(0);" class="bt" id="t_d">切换K图</a>
   		<!--<a href="javascript:void(0);">T-D</a>-->
   	</div>

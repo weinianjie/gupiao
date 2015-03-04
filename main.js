@@ -23,13 +23,33 @@ $(document).ready(function(){
 	});
 	
 	
+	/*QC.Login({
+		//btnId:"qqLoginBtn"    //插入按钮的节点id
+	},function(){alert(2)});*/
+	
+	
+	// 使用qq登录
+	$("#qq_login").click(function(){
+		QC.Login.showPopup({
+	    appId:"101196619",
+	    redirectURI:"http://www.ym26.com/gupiao/qc_callback.html"
+		});
+	});	
+	
+	$("#test").click(function(){
+		window.open("http://www.baidu.com");
+	});
+	
+	//data-appid="101196619" data-redirecturi="REDIRECTURI" data-callback="true"
+	
+	
 	
 	fastData();
 	//setInterval("fastData()", 3000);
 	mediumData();
 	//setInterval("mediumData()", 15001);	
 	slowData();
-	//setInterval("slowData()", 30001);	
+	//setInterval("slowData()", 60001);	
 });
 
 // 快数据
@@ -102,9 +122,6 @@ function mediumData() {
 						$(".stock_block").eq(i).find(".five_flow").eq(j-13).html((qqArr2[1]/1 - qqArr2[2]/1 + "").split(".")[0] + "万");
 					}
 				}
-				
-				// 分时K图
-				$(".map .tkmap").eq(i).attr("src", "http://image.sinajs.cn/newchart/min/n/" + stockArr[i] + ".gif&_=" + parseInt(100000*Math.random()));
 			}
 		}
 	});
@@ -162,5 +179,8 @@ function mediumData() {
 
 // 慢数据
 function slowData() {
-	
+	for(var i=0;i<stockArr.length;i++){
+		// 分时K图
+		$(".map .tkmap").eq(i).attr("src", "http://image.sinajs.cn/newchart/min/n/" + stockArr[i] + ".gif&_=" + parseInt(100000*Math.random()));		
+	}
 }

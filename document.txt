@@ -116,3 +116,13 @@ v_bkhz_Ind_fi="011700~011900~013300~01270xxx;//流入少在前
 http://qt.gtimg.cn/r=0.5673184113111347q=bkhz013400,bkhz011500
 v_bkhz013400="013400~信托~3~0~0~3~22.556~0.602~2.742~676526~102638~sh600830~sh600816~42950.78~20741.97~22208.80~27688.53~28.89";
 0：行业ID，1：行业名称，8：涨跌幅，11：涨跌代表，12：资金代表，13：流入，14：流出，15，净流入
+
+9.QQ登录
+本url是qq自选股入口
+http://stockapp.finance.qq.com/panel2/index.php?uin=304468211&key=F9534065A6CFDED574844630E587A0070DA9CF4D2D233FA77316689540D35C02&ADUIN=304468211&ADSESSION=1425431015&ADTAG=CLIENT.QQ.5389_Appbox.0&ADPUBNO=26441
+
+以上url会触发本url实现登录设置cookie
+http://ptlogin2.qq.com/jump?clientuin=304468211&clientkey=F9534065A6CFDED574844630E587A0070DA9CF4D2D233FA77316689540D35C02&u1=http%3A%2F%2Ffinance.qq.com%2Fstock%2Fsother%2FgetSkeyForPanel2.htm
+
+以上url设置完成cookie（核心skey=@xxx）后下面url可以访问自选股
+http://webstock.finance.qq.com/stockapp/zixuanguweb/stocklist?callback=NEWSTOCKPROXY14254506616520&app=web&range=group&uin=304468211

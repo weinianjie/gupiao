@@ -9,56 +9,67 @@
     <script type="text/javascript" src="main.js"></script>
   </head>
   <body>
-  	<div class="summary">
+  	<div class="summary" style="border-bottom:solid 1px #ccc;">
   		<span class="dapan"></span>
   		<span class="dapan_flow"></span>
   		<a href="javascript:void(0);" class="bt" id="t_d">切换K图</a>
   		<!--<a href="javascript:void(0);">T-D</a>-->
   	</div>
 		<div class="stock_list">
-			<div class="basic_info">
-				<div class="info"></div>
-				<div class="info" style="background-color:#eee;"></div>
-				<div class="info"></div>
-				<div class="info" style="background-color:#eee;"></div>
-			</div>
-			<?php
-				$stockList = array("000333","000651","002190","002594","000650","000952","000417","002336");
-				foreach($stockList as $stockCode){
-					$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
-			?>
-					<div class="stock_block" id="s_<?php echo $stockId; ?>">
-						<div class="summary">
-							<span class="gegu"></span>
+			<div class="page_left">
+				<div class="basic_info">
+					<div class="info"></div>
+					<div class="info" style="background-color:#eee;"></div>
+					<div class="info"></div>
+					<div class="info" style="background-color:#eee;"></div>
+				</div>
+				<?php
+					$stockList = array("000333","000651","002190","002594","000650","000952","000417","002336");
+					foreach($stockList as $stockCode){
+						$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
+				?>
+						<div class="stock_block" id="s_<?php echo $stockId; ?>">
+							<div class="summary">
+								<span class="gegu"></span>
+							</div>
+							<table border="1" class="detail">
+								<tr>
+									<td class="map" colspan="2">
+										<div class="limit">
+											<img class="tkmap" src="" />
+											<img class="dkmap hide" src="http://image.sinajs.cn/newchart/daily/n/<?php echo $stockId; ?>.gif" />
+										</div>									
+									</td>
+									<td class="deal" rowspan="2"></td>
+								</tr>
+								<tr>
+									<td class="today_flow">
+										<div class="summary extends">1</div>
+										<div class="pillar m1"><div class="word"></div><div class="view v1"></div></div>
+										<div class="pillar m2"><div class="word"></div><div class="view v2"></div></div>
+										<div class="pillar m3"><div class="word"></div><div class="view v1"></div></div>
+										<div class="pillar m4"><div class="word"></div><div class="view v2"></div></div>
+									</td>
+									<td class="money_flow">
+										<ul>
+											<li class="zong_value"></li>
+											<li class="flow_value"></li>
+											<li class="five_flow"></li>
+											<li class="five_flow"></li>
+											<li class="five_flow"></li>
+											<li class="five_flow"></li>
+											<li class="five_flow"></li>
+										</ul>
+									</td>
+								</tr>
+							</table>
 						</div>
-						<table border="1" class="detail">
-							<tr>
-								<td class="map" colspan="2">
-									<div class="limit">
-										<img class="tkmap" src="" />
-										<img class="dkmap hide" src="http://image.sinajs.cn/newchart/daily/n/<?php echo $stockId; ?>.gif" />
-									</div>									
-								</td>
-								<td class="deal" rowspan="2"></td>
-							</tr>
-							<tr>
-								<td class="today_flow">
-									<div class="summary extends">1</div>
-									<div class="pillar m1"><div class="word"></div><div class="view v1"></div></div>
-									<div class="pillar m2"><div class="word"></div><div class="view v2"></div></div>
-									<div class="pillar m3"><div class="word"></div><div class="view v1"></div></div>
-									<div class="pillar m4"><div class="word"></div><div class="view v2"></div></div>
-								</td>
-								<td class="money_flow">
-									<div class="total_value"></div>
-									<div class="five_flow"></div>
-								</td>
-							</tr>
-						</table>
-					</div>
-			<?php
-				}
-			?>
+				<?php
+					}
+				?>
+			</div>
+			<div class="page_right">
+			</div>
 		</div>
   </body>
 </html>

@@ -24,9 +24,9 @@ $(document).ready(function(){
 	
 	
 	fastData();
-	//setInterval("fastData()", 3000);
+	setInterval("fastData()", 3000);
 	mediumData();
-	//setInterval("mediumData()", 15001);	
+	setInterval("mediumData()", 15001);	
 	slowData();
 	//setInterval("slowData()", 30001);	
 });
@@ -52,7 +52,7 @@ function fastData() {
 				eval("var qqArr = v_" + stockArr[i] + ".split('~')");
 				if(qqArr && qqArr.length > 0) {
 					var msClass = qqArr[32] >= 0? "up" : "down";
-					var summary_html = "<span><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank'>" + qqArr[1] + "</a>(" + qqArr[2] + ")</span>";
+					var summary_html = "<span><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank'>" + qqArr[1] + "</a>" + qqArr[2] + "</span>";
 					summary_html += "<span>昨:" + qqArr[4] + "</span>";
 					summary_html += "<span>开:" + qqArr[5] + "</span>";
 					summary_html += "<span>当:" + qqArr[3] + "</span>";
@@ -61,7 +61,8 @@ function fastData() {
 					summary_html += "<span>" + qqArr[32] + "%</span>";
 					$(".stock_block .gegu").eq(i).html(summary_html).parent(".summary").removeClass("up").removeClass("down").addClass(msClass);
 					$(".today_flow .extends").eq(i).html("<span>净:" + qqArr[46] + "</span><span>盈:" + qqArr[39] + "</span>");
-					$(".money_flow .total_value").eq(i).html("<span>总:" + (qqArr[45] + "").split(".")[0] + "亿</span><span>流:" + (qqArr[44] + "").split(".")[0] + "亿</span>");
+					$(".money_flow .zong_value").eq(i).html("总:" + (qqArr[45] + "").split(".")[0] + "亿");
+					$(".money_flow .flow_value").eq(i).html("流:" + (qqArr[44] + "").split(".")[0] + "亿");
 				}
 			}
 		}
@@ -94,12 +95,11 @@ function mediumData() {
 					
 					
 					// 五日流动性
-					var five_html = ("<div>" + (qqArr[3]/1 + qqArr[7]/1)).split(".")[0] + "万</div>"
+					$(".stock_block").eq(i).find(".five_flow").eq(0).html((qqArr[3]/1 + qqArr[7]/1 + "").split(".")[0] + "万");
 					for(var j=14;j<=17;j++){
 						var qqArr2 = qqArr[j].split("^");
-						five_html += ("<div>" + (qqArr2[1]/1 - qqArr2[2]/1)).split(".")[0] + "万</div>";
+						$(".stock_block").eq(i).find(".five_flow").eq(j-13).html((qqArr2[1]/1 - qqArr2[2]/1 + "").split(".")[0] + "万");
 					}
-					$(".five_flow").eq(i).html(five_html);
 				}
 				
 				// 分时K图
@@ -114,7 +114,7 @@ function mediumData() {
 			if(qqArr && qqArr.length >=8){
 				var html1 = "<ul><li class='extends'>主力流入</li>";
 				var html2 = "<ul><li class='extends'>主力流出</li>";
-				for(var i=0;i<10;i++){
+				for(var i=0;i<8;i++){
 					var qqArrX = qqArr[i].split("~");
 					var qqArrY = qqArr[qqArr.length-1-i].split("~");
 					console.info(global_data_hangye["hy"+qqArrX[0]]);
@@ -132,7 +132,7 @@ function mediumData() {
 	// 全股资金流向
 	$.ajax({url: qq_flow_dapan_url, dataType:"script", cache:false, success:function(){
 			var qqArr = v_funds_dapan.split('~');			
-			$(".dapan_flow").html("全股资金:" + ((qqArr[2]/1 + qqArr[5]/1)/10000 + "").split(".")[0] + "亿");
+			$(".dapan_flow").html("全股进出:" + ((qqArr[2]/1 + qqArr[5]/1)/10000 + "").split(".")[0] + "亿");
 		}
 	});
 }

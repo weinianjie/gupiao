@@ -23,18 +23,23 @@ $(document).ready(function(){
 	});
 	
 	
-	/*QC.Login({
-		//btnId:"qqLoginBtn"    //插入按钮的节点id
-	},function(){alert(2)});*/
-	
+	// 绑定qq登录回调函数
+	/*QC.Login({},
+		function(){// 登录成功
+			alert(2);
+		},
+		function(){// 注销成功
+			alert(3);
+		}
+	);
 	
 	// 使用qq登录
 	$("#qq_login").click(function(){
 		QC.Login.showPopup({
-	    appId:"101196619",
-	    redirectURI:"http://www.ym26.com/gupiao/qc_callback.html"
+	    appId:"101196619"/*,
+	    redirectURI:"http://www.ym26.com/qc_callback.html"
 		});
-	});	
+	});*/
 	
 	$("#test").click(function(){
 		window.open("http://www.baidu.com");
@@ -80,7 +85,7 @@ function fastData() {
 					summary_html += "<span>高:" + qqArr[33] + "</span>";
 					summary_html += "<span>低:" + qqArr[34] + "</span>";
 					summary_html += "<span>" + qqArr[32] + "%</span>";
-					$(".stock_block .gegu").eq(i).html(summary_html).parent(".summary").removeClass("up").removeClass("down").addClass(msClass);
+					$(".stock_block .gegu").eq(i).html(summary_html).removeClass("up").removeClass("down").addClass(msClass);
 					$(".today_flow .extends").eq(i).html("<span>净:" + qqArr[46] + "</span><span>盈:" + qqArr[39] + "</span>");
 					$(".money_flow .zong_value").eq(i).html("总:" + (qqArr[45] + "").split(".")[0] + "亿");
 					$(".money_flow .flow_value").eq(i).html("流:" + (qqArr[44] + "").split(".")[0] + "亿");
@@ -138,7 +143,7 @@ function mediumData() {
 			var zhangdieArr = v_bkhz_Ind_inc.split('~');
 			var zijinArr = v_bkhz_Ind_fi.split('~');
 			var url_param = "";
-			for(var i=0;i<=8;i++){
+			for(var i=0;i<8;i++){
 				if(url_param.indexOf(zhangdieArr[i]) == -1){
 					url_param += "bkhz" + zhangdieArr[i] + ",";
 				}
@@ -157,7 +162,7 @@ function mediumData() {
 					var html1 = "<ul><li class='extends'>行业跌幅榜</li>";
 					var html2 = "<ul><li class='extends'>主力流入榜</li>";
 					var html3 = "<ul><li class='extends'>主力流出榜</li>";						
-					for(var i=0;i<=8;i++){
+					for(var i=0;i<8;i++){
 						eval("var qqArr0 = v_bkhz" + zhangdieArr[i] + ".split('~')");
 						eval("var qqArr1 = v_bkhz" + zhangdieArr[zhangdieArr.length-1-i] + ".split('~')");
 						eval("var qqArr2 = v_bkhz" + zijinArr[i] + ".split('~')");

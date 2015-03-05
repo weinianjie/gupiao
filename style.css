@@ -43,3 +43,6 @@ table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .stock_list .page_right .table_list .sname {width:50px; text-align:left;}
 .stock_list .page_right .table_list .sfudu {width:35px;}
 .stock_list .page_right .table_list .sbaifen {}
+
+/*-------------------------setting-------------------------*/
+.setting_table {height:auto; line-height:26px; text-align:center;}

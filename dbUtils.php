@@ -26,10 +26,15 @@ class DbUtils {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$query="select stockCode from stock order by priority";
+			$query="select stockCode,stockName,track,priority from stock order by priority";
 			$result=mysql_query($query);//执行查询
 			while($result_row=mysql_fetch_row(($result))){
-				array_push($stockList, $result_row[0]);
+				$item = array();
+				array_push($item, $result_row[0]);
+				array_push($item, $result_row[1]);
+				array_push($item, $result_row[2]);
+				array_push($item, $result_row[3]);
+				array_push($stockList, $item);
 			}
 		}
 		$this->closeConnect();
@@ -66,15 +71,17 @@ class DbUtils {
 		return $stockList;
 	}
 	
-	// 新增
-	public function add() {
+	// 新增或者修改
+	public function addOrUpdate($stockCode, $stockName, $priority, $track) {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$query="select stockCode from stock order by priority";
-			$result=mysql_query($query);//执行查询
-			while($result_row=mysql_fetch_row(($result))){
-				array_push($stockList, $result_row[0]);
+			$sql = "insert into stock values('".$stockCode."','".$stockName."',".$track.",".$priority.",now(),now()) ";
+			$sql .= "on duplicate key update stockName='".$stockName."', track=".$track.", priority=".$priority.", uts=now()";
+			if(mysql_query($sql)) {
+				return true;
+			}else {
+				return false;
 			}
 		}
 		$this->closeConnect();
@@ -86,10 +93,11 @@ class DbUtils {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$query="select stockCode from stock order by priority";
-			$result=mysql_query($query);//执行查询
-			while($result_row=mysql_fetch_row(($result))){
-				array_push($stockList, $result_row[0]);
+			$sql="delete from stock where stockCode='".$stockCode."'";
+			if(mysql_query($sql)) {
+				return true;
+			}else {
+				return false;
 			}
 		}
 		$this->closeConnect();

@@ -1,3 +1,4 @@
+var zixuanArr = new Array();
 var stockArr = new Array();
 var qq_base_url = "http://qt.gtimg.cn/?q=s_sh000001,s_sz399001";//大盘和个股数据
 var qq_flow_gegu_url = "http://qt.gtimg.cn/?q=";//个股资金动态
@@ -10,6 +11,13 @@ var qq_hangye_detail_url = "http://qt.gtimg.cn/?q=";
 
 $(document).ready(function(){
 	//初始化数据和事件
+	var zixuanStr = $("input[name=zixuanStr]").val();
+	if(zixuanStr && zixuanStr != "") {
+		zixuanArr = zixuanStr.substr(1).split(",");
+		for(var i=0;i<zixuanArr.length;i++){
+			qq_base_url += ",s_" + zixuanArr[i];
+		}
+	}
 	$(".stock_block").each(function(){
 		stockId = $(this).attr("id").split("_")[1];
 		stockArr.push(stockId);
@@ -35,7 +43,7 @@ $(document).ready(function(){
 	
 	
 	fastData();
-	//setInterval("fastData()", 3000);
+	//setInterval("fastData()", 3600);
 	mediumData();
 	//setInterval("mediumData()", 15001);	
 	slowData();
@@ -58,7 +66,7 @@ function fastData() {
 			summary_html += "<span>交易:" + szArr[7]/10000 + "亿</span>";
 			$(".dapan").html(summary_html).parent(".summary").removeClass("up").removeClass("down").addClass(msClass);
 			
-			// 个股
+			// 追踪个股
 			for(var i=0;i<stockArr.length;i++){
 				eval("var qqArr = v_" + stockArr[i] + ".split('~')");
 				if(qqArr && qqArr.length > 0) {
@@ -76,6 +84,15 @@ function fastData() {
 					$(".money_flow .flow_value").eq(i).html("流:" + (qqArr[44] + "").split(".")[0] + "亿");
 				}
 			}
+			
+			// 自选个股
+			var html = "<table border='0' class='table_list'>";
+			for(var i=0;i<zixuanArr.length;i++){
+				eval("var qqArr = v_s_" + zixuanArr[i] + ".split('~')");
+				html += "<tr><td class='sname'><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank' title='" + qqArr[2] + "'>" + qqArr[1] + "</a></td><td class='sfudu'>" + qqArr[3] + "</td><td class='sbaifen'>" + qqArr[5] + "%</td></tr>";
+			}
+			html += "</table>";
+			$(".page_right").html(html);
 		}
 	});
 }

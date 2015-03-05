@@ -126,3 +126,6 @@ http://ptlogin2.qq.com/jump?clientuin=304468211&clientkey=F9534065A6CFDED5748446
 
 以上url设置完成cookie（核心skey=@xxx）后下面url可以访问自选股
 http://webstock.finance.qq.com/stockapp/zixuanguweb/stocklist?callback=NEWSTOCKPROXY14254506616520&app=web&range=group&uin=304468211
+
+登录状态下获取个人自选股
+http://webstock.finance.qq.com/stockapp/zixuanguweb/stocklist?callback=NEWSTOCKPROXY14254506616520&app=web&range=group&uin=304468211

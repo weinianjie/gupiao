@@ -1,10 +1,10 @@
 <?php
 class DbUtils {
 	private $connection = null;
-	private $db_host='127.0.0.1';
-	// $db_username='a0226150238';
-	// $db_password='92395451';
-	// $db_database='a0226150238';
+// 	private $db_host='127.0.0.1';
+// 	private $db_username='a0226150238';
+// 	private $db_password='92395451';
+// 	private $db_database='a0226150238';
 	private $db_username='root';
 	private $db_password='linux';
 	private $db_database='sheep';
@@ -26,7 +26,7 @@ class DbUtils {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$query="select stockCode,stockName,track,priority from stock order by priority";
+			$query="select stockCode,stockName,track,priority from stock order by priority limit 100";
 			$result=mysql_query($query);//执行查询
 			while($result_row=mysql_fetch_row(($result))){
 				$item = array();
@@ -46,7 +46,7 @@ class DbUtils {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$query="select stockCode from stock order by priority limit 20";
+			$query="select stockCode from stock order by priority limit 26";
 			$result=mysql_query($query);//执行查询
 			while($result_row=mysql_fetch_row(($result))){
 				array_push($stockList, $result_row[0]);

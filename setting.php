@@ -59,9 +59,9 @@
         // 修改
     	$(".update").click(function(){
     		var tr = $(this).parent("td").parent("tr");
-			$("input[name=stockCode]").val(tr.find("td").eq(0).text());
-			$("input[name=priority]").val(tr.find("td").eq(2).text());
-			if(tr.find("td").eq(2).text() == "1") {
+			$("input[name=stockCode]").val(tr.find("td").eq(1).text());
+			$("input[name=priority]").val(tr.find("td").eq(3).text());
+			if(tr.find("td").eq(4).text() == "1") {
 				$("input[name=track]").attr("checked","checked");	
 			}else {
 				$("input[name=track]").removeAttr("checked");
@@ -92,6 +92,7 @@
   ?>
   <table border="1" class="setting_table">
   	<tr>
+  		<th>序号</th>
   		<th>股票代码</th>
   		<th>股票名称</th>  		
   		<th>股票排序</th>
@@ -99,9 +100,10 @@
   		<th>操作</th>
   	</tr>
   	<?php
-  		foreach ($list as $stock) {
+  		foreach ($list as $key=>$stock) {
   	?>
   	<tr id="<?php echo $stock[0]; ?>">
+  		<td><?php echo $key+1; ?></td>
   		<td><?php echo $stock[0]; ?></td>
   		<td><?php echo $stock[1]; ?></td>  		
   		<td><?php echo $stock[3]; ?></td>

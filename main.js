@@ -43,11 +43,11 @@ $(document).ready(function(){
 	
 	
 	fastData();
-	//setInterval("fastData()", 3600);
+	setInterval("fastData()", 3600);
 	mediumData();
-	//setInterval("mediumData()", 15001);	
+	setInterval("mediumData()", 15001);	
 	slowData();
-	//setInterval("slowData()", 60001);	
+	setInterval("slowData()", 60001);	
 });
 
 // 快数据

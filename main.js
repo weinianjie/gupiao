@@ -22,30 +22,15 @@ $(document).ready(function(){
 		$(".map .tkmap, .map .dkmap").toggle();
 	});
 	
+	// QQ登录
+//	$("#qq_login").click(function(){
+//		window.open("qc/oauth/index.php", "TencentLogin",  "width=450,height=320,menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
+//	});
 	
-	// 绑定qq登录回调函数
-	/*QC.Login({},
-		function(){// 登录成功
-			alert(2);
-		},
-		function(){// 注销成功
-			alert(3);
-		}
-	);
-	
-	// 使用qq登录
-	$("#qq_login").click(function(){
-		QC.Login.showPopup({
-	    appId:"101196619"/*,
-	    redirectURI:"http://www.ym26.com/qc_callback.html"
-		});
-	});*/
-	
-	$("#test").click(function(){
-		window.open("http://www.baidu.com");
+	// 配置股票
+	$("#setting").click(function(){
+		window.open("setting.php");
 	});
-	
-	//data-appid="101196619" data-redirecturi="REDIRECTURI" data-callback="true"
 	
 	
 	

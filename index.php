@@ -6,9 +6,6 @@
     <meta property="qc:admins" content="3404475667615266375" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script type="text/javascript" src="jquery.min.js"></script>
-    <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101196619" charset="utf-8"></script>-->
-    <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101196619" data-redirecturi="http://www.ym26.com" data-callback="true" charset="utf-8"></script>-->
-    <!--<script type="text/javascript" src="2.js" data-appid="101196619" charset="utf-8"></script>-->
     <script type="text/javascript" src="main.js"></script>
   </head>
   <body>
@@ -17,6 +14,7 @@
   		<span class="dapan_flow"></span>
   		<a href="javascript:void(0);" class="bt" id="qq_login">登录</a>
   		<a href="javascript:void(0);" class="bt" id="t_d">切换K图</a>
+  		<a href="javascript:void(0);" class="bt" id="setting">配置股票</a>
   	</div>
 		<div class="stock_list">
 			<div class="page_left">

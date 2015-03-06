@@ -8,6 +8,7 @@ img {border:none;}
 table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .up {background-color:rgb(111,214,99);}
 .down {background-color:rgb(244,113,142);}
+.medium {background-color:#ccc;}
 .hide {display:none;}
 .summary {height:18px; line-height:18px;}
 .summary span {margin-left:5px;}

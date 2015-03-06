@@ -35,7 +35,10 @@
                 	for(var i=0;i<line.length;i++) {
                 		var arr = line[i].split(",");
                 		var s = ((arr[4] - arr[1])*100/arr[1]).toFixed(2);
-                		var c = s>=0? "up" : "down";
+                		var c = "medium";
+                		if(s != 0) {
+                			c = s>0? "up" : "down";
+                		}
                 		$("#s_" + stockCode + " td").eq(i+4).html(s + "%").addClass(c);
                 	}
             	}

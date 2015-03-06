@@ -8,7 +8,6 @@
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-        var re_number = /^[0-9]+$/i
     	// 新增
     	$(".add").click(function(){
         	var data = {};
@@ -24,12 +23,7 @@
         	data['track'] = $("input[name=track]").attr("checked")? 1:0;
 
         	// 排序
-        	var priority = $("input[name=priority]").val();
-        	if (priority == "" || !re_number.test(priority)) {
-        		data['priority'] = 0;
-        	}else{
-        		data['priority'] = priority/1;
-        	}
+        	data['priority'] = $("input[name=priority]").val().substr(0,16);
 
         	// 股票名称
         	var stockId = data['stockCode'].substr(0,1) == "0"? "sz"+data['stockCode']:"sh"+data['stockCode'];

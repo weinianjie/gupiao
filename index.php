@@ -15,7 +15,10 @@
   		<span class="dapan_flow"></span>
   		<!-- <a href="javascript:void(0);" class="bt" id="qq_login">登录</a> -->
   		<a href="javascript:void(0);" class="bt" id="t_d">切换K图</a>
-  		<a href="javascript:void(0);" class="bt" id="setting">配置股票</a>
+  		<!-- <a href="setting.php" class="bt" target="_blank">配置股票</a> -->
+  		<a href="stocklist.php" class="bt" target="_blank">自选列表</a>
+  		<a href="http://finance.qq.com/stock/xingu/index.htm?pgv_ref=fi_quote_navi_bar" class="bt" target="_blank">新股</a>
+  		<span class="bt">weinianjie@163.com</span>
   	</div>
 		<div class="stock_list">
 			<div class="page_left">

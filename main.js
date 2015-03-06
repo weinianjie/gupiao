@@ -35,11 +35,6 @@ $(document).ready(function(){
 //		window.open("qc/oauth/index.php", "TencentLogin",  "width=450,height=320,menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
 //	});
 	
-	// 配置股票
-	$("#setting").click(function(){
-		window.open("setting.php");
-	});
-	
 	
 	
 	fastData();
@@ -89,7 +84,9 @@ function fastData() {
 			var html = "<table border='0' class='table_list'>";
 			for(var i=0;i<zixuanArr.length;i++){
 				eval("var qqArr = v_s_" + zixuanArr[i] + ".split('~')");
-				html += "<tr><td class='sname'><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank' title='" + qqArr[2] + "'>" + qqArr[1] + "</a></td><td class='sfudu'>" + qqArr[3] + "</td><td class='sbaifen'>" + qqArr[5] + "%</td></tr>";
+				html += "<tr><td class='sname'><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank' title='" + qqArr[2] + "'>" + qqArr[1] + "</a></td>";
+				html += "<td class='sfudu'>" + qqArr[3] + "</td>";
+				html += "<td class='sbaifen'>" + qqArr[5] + "%</td></tr>";
 			}
 			html += "</table>";
 			$(".page_right").html(html);

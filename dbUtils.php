@@ -46,7 +46,7 @@ class DbUtils {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$query="select stockCode from stock order by priority limit 26";
+			$query="select stockCode from stock order by priority limit 100";
 			$result=mysql_query($query);//执行查询
 			while($result_row=mysql_fetch_row(($result))){
 				array_push($stockList, $result_row[0]);

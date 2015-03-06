@@ -129,3 +129,23 @@ http://webstock.finance.qq.com/stockapp/zixuanguweb/stocklist?callback=NEWSTOCKP
 
 登录状态下获取个人自选股
 http://webstock.finance.qq.com/stockapp/zixuanguweb/stocklist?callback=NEWSTOCKPROXY14254506616520&app=web&range=group&uin=304468211
+
+10.关于历史数据
+http://blog.163.com/fluxray_sensor/blog/static/2965101520085213574929/
+http://money.finance.sina.com.cn/corp/go.php/vMS_MarketHistory/stockid/002597.phtml
+
+深市数据链接：http://table.finance.yahoo.com/table.csv?s=000001.sz
+上市数据链接：http://table.finance.yahoo.com/table.csv?s=600000.ss
+
+------------------------------------------------------------------------------
+
+http://blog.sina.com.cn/s/blog_5dc29fcc0101dq5s.html
+
+从网上找到的Sina API的财经API说，Mark一下，以供以后参考
+http://market.finance.sina.com.cn/downxls.php?date=2011-07-08&symbol=sh600900
+获取代码为sh600900，在2011-07-08的成交明细，数据为xls格式。
+http://vip.stock.finance.sina.com.cn/quotes_service/view/cn_price.php?symbol=sh600900
+获得sh600900当日的分价表
+http://market.finance.sina.com.cn/pricehis.php?symbol=sh600900&startdate=2011-08-17&enddate=2011-08-19
+
+------------------------------------------------------------------------------

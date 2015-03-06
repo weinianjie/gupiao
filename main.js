@@ -5,6 +5,8 @@ var qq_flow_gegu_url = "http://qt.gtimg.cn/?q=";//个股资金动态
 var qq_flow_dapan_url = "http://stock.gtimg.cn/data/view/flow.php?t=1"//全股资金动态
 var qq_hangye_sort_url = "http://qt.gtimg.cn/?q=bkhz_Ind_inc,bkhz_Ind_fi";//行业资金和涨跌排行
 var qq_hangye_detail_url = "http://qt.gtimg.cn/?q=";
+var qq_dadan_summary = "http://stock.gtimg.cn/data/index.php?appn=dadan&action=summary&c=";
+var qq_dadan_detail = "http://stock.finance.qq.com/sstock/list/view/dadan.php?t=js&max=100&p=1&opt=12&o=0&c=";//12代表500万以上
 
 //var a = ((("37.79" - "37.15") / "37.15" * 100) + "_").substr(0,4);
 //alert(a);
@@ -35,7 +37,10 @@ $(document).ready(function(){
 //		window.open("qc/oauth/index.php", "TencentLogin",  "width=450,height=320,menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
 //	});
 	
-	
+	// 窗口调整
+//	$(window).unbind("resize").resize(function() {
+//	});
+//	$(window).resize();
 	
 	fastData();
 	setInterval("fastData()", 3600);
@@ -138,7 +143,7 @@ function mediumData() {
 	});	
 	
 	// 行业涨跌和资金
-	$.ajax({url: qq_hangye_sort_url, dataType:"script", cache:false, success:function(){
+	$.ajax({url: qq_hangye_sort_url, dataType:"script", cache:false, success:function(){// 获取排序
 			var zhangdieArr = v_bkhz_Ind_inc.split('~');
 			var zijinArr = v_bkhz_Ind_fi.split('~');
 			var url_param = "";
@@ -156,7 +161,7 @@ function mediumData() {
 					url_param += "bkhz" + zijinArr[zijinArr.length-1-i] + ",";
 				}				
 			}
-			$.ajax({url: qq_hangye_detail_url + url_param, dataType:"script", cache:false, success:function(){
+			$.ajax({url: qq_hangye_detail_url + url_param, dataType:"script", cache:false, success:function(){// 获取具体值
 					var html0 = "<ul><li class='extends'>行业涨幅榜</li>";
 					var html1 = "<ul><li class='extends'>行业跌幅榜</li>";
 					var html2 = "<ul><li class='extends'>主力流入榜</li>";
@@ -179,6 +184,35 @@ function mediumData() {
 			});
 		}
 	});
+	
+	// 大单数据
+	for(var i=0;i<stockArr.length;i++){
+		(function(i){
+			// 概要
+			$.ajax({url: qq_dadan_summary + stockArr[i], dataType:"script", cache:false, success:function(){
+					eval("var qqArr = v_dadan_summary_" + stockArr[i] + "[12]");//100W，opt=10的项目，在返回数组的第12个元素上
+					var html = "<div>100万以上概要<div>";
+					html += "<div>买：" + qqArr[4] + "手</div>";
+					html += "<div>卖：" + qqArr[5] + "手</div>";
+					html += "<div>中：" + qqArr[6] + "手</div>";
+					$(".stock_block .dadan .percent").eq(i).html(html);
+				}
+			});
+			
+			// 明细，查找500W以上的
+			$.ajax({url: qq_dadan_detail + stockArr[i], dataType:"script", cache:false, success:function(){
+					eval("var qqArr = (v_dadan_data_" + stockArr[i] + "[1]).split('^')");
+					var html = "<ul>";
+					html += "<li>500万以上明细<li>";
+					for(var j=0;j<qqArr.length;j++) {
+						var qqArr2 = qqArr[j].split("~");
+						html += "<li>" + qqArr2[1] + "~" + qqArr2[2] + "~" + qqArr2[4].split(".")[0] + "~" + qqArr2[5] + "</li>";
+					}
+					$(".stock_block .dadan .deal").eq(i).html(html+"</ul>");
+				}
+			});				
+		}(i));
+	}
 }
 
 // 慢数据

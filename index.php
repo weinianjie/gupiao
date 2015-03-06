@@ -55,7 +55,10 @@
 											<img class="dkmap hide" src="http://image.sinajs.cn/newchart/daily/n/<?php echo $stockId; ?>.gif" />
 										</div>									
 									</td>
-									<td class="deal" rowspan="2"></td>
+									<td class="dadan" rowspan="2">
+										<div class="percent"></div>
+										<div class="deal"></div>
+									</td>
 								</tr>
 								<tr>
 									<td class="today_flow">

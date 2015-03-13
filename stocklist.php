@@ -16,7 +16,7 @@
         			for(var i=0;i<zixuanArr.length;i++){
         				eval("var qqArr = v_s_" + zixuanArr[i] + ".split('~')");
             			var c = qqArr[5]/1 >= 0? "up":"down";
-        				$("#s_" + qqArr[2] + " td").eq(2).html(qqArr[3] + "%").addClass(c);
+        				$("#s_" + qqArr[2] + " td").eq(2).html(qqArr[3] + "").addClass(c);
         				$("#s_" + qqArr[2] + " td").eq(3).html(qqArr[5]  + "%").addClass(c);
     				}
         		}

@@ -69,7 +69,7 @@ function fastData() {
 			// 追踪个股
 			for(var i=0;i<stockArr.length;i++){
 				eval("var qqArr = v_" + stockArr[i] + ".split('~')");
-				if(qqArr && qqArr.length > 0) {
+				if(qqArr && qqArr.length > 1) {
 					var msClass = qqArr[32] >= 0? "up" : "down";
 					var summary_html = "<span><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank'>" + qqArr[1] + "</a>" + qqArr[2] + "</span>";
 					summary_html += "<span>昨:" + qqArr[4] + "</span>";
@@ -110,7 +110,7 @@ function mediumData() {
 	$.ajax({url: qq_flow_gegu_url, dataType:"script", cache:false, success:function(){
 			for(var i=0;i<stockArr.length;i++){
 				eval("var qqArr = v_ff_" + stockArr[i] + ".split('~')");
-				if(qqArr && qqArr.length > 0) {
+				if(qqArr && qqArr.length > 1) {
 					// 当日流动柱状图
 					var i_max = Math.max(qqArr[2], qqArr[3], qqArr[5], qqArr[6]);
 					$(".today_flow").eq(i).find(".view").eq(0).height(box_height*qqArr[1]/i_max);
@@ -137,7 +137,7 @@ function mediumData() {
 	
 	// 全股资金流向
 	$.ajax({url: qq_flow_dapan_url, dataType:"script", cache:false, success:function(){
-			var qqArr = v_funds_dapan.split('~');			
+			var qqArr = v_funds_dapan.split('~');
 			$(".dapan_flow").html("全股进出:" + ((qqArr[2]/1 + qqArr[5]/1)/10000 + "").split(".")[0] + "亿");
 		}
 	});	
@@ -191,11 +191,13 @@ function mediumData() {
 			// 概要
 			$.ajax({url: qq_dadan_summary + stockArr[i], dataType:"script", cache:false, success:function(){
 					eval("var qqArr = v_dadan_summary_" + stockArr[i] + "[12]");//100W，opt=10的项目，在返回数组的第12个元素上
-					var html = "<div>100万以上概要<div>";
-					html += "<div>买：" + qqArr[4] + "手</div>";
-					html += "<div>卖：" + qqArr[5] + "手</div>";
-					html += "<div>中：" + qqArr[6] + "手</div>";
-					$(".stock_block .dadan .percent").eq(i).html(html);
+					if(qqArr && qqArr.length > 1){
+						var html = "<div>100万以上概要<div>";
+						html += "<div>买：" + qqArr[4] + "手</div>";
+						html += "<div>卖：" + qqArr[5] + "手</div>";
+						html += "<div>中：" + qqArr[6] + "手</div>";
+						$(".stock_block .dadan .percent").eq(i).html(html);
+					}
 				}
 			});
 			
@@ -206,7 +208,9 @@ function mediumData() {
 					html += "<li>500万以上明细<li>";
 					for(var j=0;j<qqArr.length;j++) {
 						var qqArr2 = qqArr[j].split("~");
-						html += "<li>" + qqArr2[1] + "~" + qqArr2[2] + "~" + qqArr2[4].split(".")[0] + "~" + qqArr2[5] + "</li>";
+						if(qqArr2 && qqArr2.length > 1){
+							html += "<li>" + qqArr2[1] + "~" + qqArr2[2] + "~" + qqArr2[4].split(".")[0] + "~" + qqArr2[5] + "</li>";
+						}
 					}
 					$(".stock_block .dadan .deal").eq(i).html(html+"</ul>");
 				}

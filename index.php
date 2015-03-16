@@ -1,4 +1,3 @@
-<?php require_once("dbUtils.php");?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">	
   <head>
@@ -13,12 +12,10 @@
   	<div class="summary" style="border-bottom:solid 1px #ccc;">
   		<span class="dapan"></span>
   		<span class="dapan_flow"></span>
-  		<!-- <a href="javascript:void(0);" class="bt" id="qq_login">登录</a> -->
+  		<a href="javascript:void(0);" class="bt" id="qq_login">QQ登录</a>
   		<a href="javascript:void(0);" class="bt" id="t_d">切换K图</a>
-  		<!-- <a href="setting.php" class="bt" target="_blank">配置股票</a> -->
   		<a href="stocklist.php" class="bt" target="_blank">自选列表</a>
   		<a href="http://finance.qq.com/stock/xingu/index.htm?pgv_ref=fi_quote_navi_bar" class="bt" target="_blank">新股</a>
-  		<span class="bt">weinianjie@163.com</span>
   	</div>
 		<div class="stock_list">
 			<div class="page_left">
@@ -29,8 +26,7 @@
 					<div class="info" style="background-color:#eee;"></div>
 				</div>
 				<?php
-					$dbUtils = new DbUtils();
-					$zixuanList = $dbUtils->getZixuangu();
+					$zixuanList = array("000333","000651","002190","002594","000650","000952","000417","002336");
 					$zixuanStr = '';
 					foreach($zixuanList as $stockCode) {
 						$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
@@ -39,8 +35,7 @@
 				?>
 				<input type="hidden" name="zixuanStr" value="<?php echo $zixuanStr; ?>" />
 				<?php
-					$stockList = $dbUtils->getTrack();
-					//$stockList = array("000333","000651","002190","002594","000650","000952","000417","002336");					
+					$stockList = array("000333","000651","002190","002594","000650","000952","000417","002336");
 					foreach($stockList as $stockCode){
 						$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
 				?>

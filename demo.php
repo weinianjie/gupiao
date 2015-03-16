@@ -28,7 +28,7 @@
 					<div class="info" style="background-color:#eee;"></div>
 				</div>
 				<?php
-					$zixuanList = array("000333","000651","002190","002594","000650","000952","000417","002336");	
+					$zixuanList = array("000333","000651","002190","002594","000650","000952","000417","002336","000800");	
 					$zixuanStr = '';
 					foreach($zixuanList as $stockCode) {
 						$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;

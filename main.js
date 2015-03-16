@@ -33,9 +33,9 @@ $(document).ready(function(){
 	});
 	
 	// QQ登录
-//	$("#qq_login").click(function(){
-//		window.open("qc/oauth/index.php", "TencentLogin",  "width=450,height=320,menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
-//	});
+	$("#qq_login").click(function(){
+		window.open("qc/oauth/index.php", "TencentLogin",  "width=450,height=320,menubar=0,scrollbars=1, resizable=1,status=1,titlebar=0,toolbar=0,location=1");
+	});
 	
 	// 窗口调整
 //	$(window).unbind("resize").resize(function() {

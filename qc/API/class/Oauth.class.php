@@ -124,7 +124,9 @@ class Oauth{
     public function is_login(){
     	$_access_token = $this->recorder->read("access_token");
     	$_openid = $this->recorder->read("openid");
-    	return (empty($_access_token) || empty($_openid));
+    	echo $_access_token;
+    	echo $_openid;
+//     	return (empty($_access_token) || empty($_openid));
     }
     
 }

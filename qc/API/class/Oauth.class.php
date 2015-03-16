@@ -122,9 +122,17 @@ class Oauth{
     
     
     public function is_login(){
-    	$_access_token = $this->recorder->read("access_token");
-    	$_openid = $this->recorder->read("openid");
-    	return (!empty($_access_token) && !empty($_openid));
+    	// api的判断登录的方法，由于session域的原因，qq官方网站注销后，该域session依然会存在
+//     	$_access_token = $this->recorder->read("access_token");
+//     	$_openid = $this->recorder->read("openid");
+//     	return (!empty($_access_token) && !empty($_openid));
+
+    	echo $this->recorder->read("openid");
+
+    	// 改成使用qq官方网站的url来判断是否已经登录
+//     	$url = "http://webstock.finance.qq.com/stockapp/zixuanguweb/stocklist?callback=sheep&app=web&range=group&uin=304468211";
+//     	$str = file_get_contents($url);
+//     	return !strpos($str, "login failed");
     }
     
 }

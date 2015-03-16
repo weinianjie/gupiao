@@ -3,13 +3,13 @@ require_once("../API/qqConnectAPI.php");
 $qc = new QC();
 
 
-if($qc->is_login()) {
-	var_dump($qc->get_user_info());
-}else{
-	echo "no login";
-}
+// if($qc->is_login()) {
+// 	var_dump($qc->get_user_info());
+// }else{
+// 	echo "no login";
+// }
 
-// $qc->is_login();
+$qc->is_login();
 
 // echo "|";
 

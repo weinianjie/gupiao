@@ -1,2 +1,2 @@
 <?php die('forbidden'); ?>
-{"appid":"101196619","appkey":"fd814c2060c8d2e24f209252636e2d06","callback":"http%3a%2f%2fguge24.duapp.com%2fqc%2foauth%2fcallback.php","scope":"get_user_info","errorReport":true,"storageType":"file","host":"localhost","user":"root","password":"root","database":"test"}
+{"appid":"101196619","appkey":"fd814c2060c8d2e24f209252636e2d06","callback":"http://guge24.duapp.com/qc/oauth/callback.php","scope":"get_user_info","errorReport":true,"storageType":"file","host":"localhost","user":"root","password":"root","database":"test"}

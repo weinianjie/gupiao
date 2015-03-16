@@ -3,7 +3,7 @@
   <head>
     <title>股哥</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta property="qc:admins" content="3404475667615266375" />
+    <meta property="qc:admins" content="34044756475246451006375" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="main.js"></script>

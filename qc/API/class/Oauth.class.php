@@ -119,4 +119,10 @@ class Oauth{
         return $user->openid;
 
     }
+    
+    
+    public function is_login(){
+    	return empty($this->recorder->read("access_token")) || empty($this->recorder->read("openid"));
+    }
+    
 }

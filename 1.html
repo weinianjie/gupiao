@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("iframe[name=subwin]").attr("src", "http://kf.qq.com/cgi-bin/loginTitle?rand=0.7180532270576806"); 
+	$("iframe[name=subwin]").load(function() {
+		var subwin = $(window.frames["subwin"].document);
+		alert(subwin.text());
+		//alert(udom.size()); 
+	}); 
+});
+</script>
+</head>
+<body>
+<iframe name="subwin" src="" width="750" height="30" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+</body>
+</html>

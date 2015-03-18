@@ -36,15 +36,26 @@
 						$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
 						$zixuanStr = $zixuanStr.','.$stockId;
 					}
+					if($zixuanStr != ''){
+						$zixuanStr = substr($zixuanStr, 1);
+					}
+					
+					$trackList = $dbUtils->getTrack();
+					$trackStr = '';
+					foreach($trackList as $stockCode) {
+						$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
+						$trackStr = $trackStr.','.$stockId;
+					}
+					if($trackStr != ''){
+						$trackStr = substr($trackStr, 1);
+					}					
 				?>
 				<input type="hidden" name="zixuanStr" value="<?php echo $zixuanStr; ?>" />
+				<input type="hidden" name=trackStr value="<?php echo $trackStr; ?>" />
 				<?php
-					$stockList = $dbUtils->getTrack();
-					//$stockList = array("000333","000651","002190","002594","000650","000952","000417","002336");					
-					foreach($stockList as $stockCode){
-						$stockId = strpos($stockCode, "6") === 0? "sh".$stockCode : "sz".$stockCode;
+					for($i=0;$i<8;$i++){
 				?>
-						<div class="stock_block" id="s_<?php echo $stockId; ?>">
+						<div class="stock_block">
 							<div class="summary gegu">
 							</div>
 							<table border="1" class="detail">
@@ -52,7 +63,7 @@
 									<td class="map" colspan="2">
 										<div class="limit">
 											<img class="tkmap" src="" />
-											<img class="dkmap hide" src="http://image.sinajs.cn/newchart/daily/n/<?php echo $stockId; ?>.gif" />
+											<img class="dkmap hide" src="" />
 										</div>									
 									</td>
 									<td class="dadan" rowspan="2">
@@ -62,7 +73,7 @@
 								</tr>
 								<tr>
 									<td class="today_flow">
-										<div class="summary extends">1</div>
+										<div class="summary extends"></div>
 										<div class="pillar m1"><div class="word"></div><div class="view v1"></div></div>
 										<div class="pillar m2"><div class="word"></div><div class="view v2"></div></div>
 										<div class="pillar m3"><div class="word"></div><div class="view v1"></div></div>

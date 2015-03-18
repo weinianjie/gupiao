@@ -8,6 +8,12 @@
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
+
+    	// 修改股票代码的时候重置track为0
+    	$("input[name=stockCode]").change(function(){
+    		$("input[name=track]").val("0");
+        });
+        
     	// 新增
     	$(".add").click(function(){
         	var data = {};
@@ -19,8 +25,8 @@
         		return;
         	}
 
-        	// 是否追踪
-        	data['track'] = $("input[name=track]").attr("checked")? 1:0;
+        	// 追踪序号
+        	data['track'] = $("input[name=track]").val();
 
         	// 排序
         	data['priority'] = $("input[name=priority]").val().substr(0,16);
@@ -55,11 +61,7 @@
     		var tr = $(this).parent("td").parent("tr");
 			$("input[name=stockCode]").val(tr.find("td").eq(1).text());
 			$("input[name=priority]").val(tr.find("td").eq(3).text());
-			if(tr.find("td").eq(4).text() == "1") {
-				$("input[name=track]").attr("checked","checked");	
-			}else {
-				$("input[name=track]").removeAttr("checked");
-			}
+			$("input[name=track]").val(tr.find("td").eq(4).text());
         });
 
         // 删除
@@ -77,7 +79,7 @@
   <form action="#" style="width:100%; border:solid 1px #ccc;">
   	<span>股票代码</span><input type="text" name="stockCode" />
   	<span>排序</span><input type="text" name="priority" />
-  	<span>是否追踪</span><input type="checkbox" name="track" value="1" />
+  	<input type="hidden" name="track" value="0" />
   	<input type="button" class="add" value="确定" />
   </form>
   <?php
@@ -90,7 +92,7 @@
   		<th>股票代码</th>
   		<th>股票名称</th>  		
   		<th>股票排序</th>
-  		<th>是否追踪</th>
+  		<th>跟踪序号</th>
   		<th>操作</th>
   	</tr>
   	<?php

@@ -1,5 +1,5 @@
 var zixuanArr = new Array();
-var stockArr = new Array();
+var trackArr = new Array();
 var qq_base_url = "http://qt.gtimg.cn/?q=s_sh000001,s_sz399001";//大盘和个股数据
 var qq_flow_gegu_url = "http://qt.gtimg.cn/?q=";//个股资金动态
 var qq_flow_dapan_url = "http://stock.gtimg.cn/data/view/flow.php?t=1"//全股资金动态
@@ -8,6 +8,8 @@ var qq_hangye_detail_url = "http://qt.gtimg.cn/?q=";
 var qq_dadan_summary = "http://stock.gtimg.cn/data/index.php?appn=dadan&action=summary&c=";
 var qq_dadan_detail = "http://stock.finance.qq.com/sstock/list/view/dadan.php?t=js&max=100&p=1&opt=12&o=0&c=";//12代表500万以上
 
+var drag_stock = "";
+
 //var a = ((("37.79" - "37.15") / "37.15" * 100) + "_").substr(0,4);
 //alert(a);
 
@@ -15,17 +17,33 @@ $(document).ready(function(){
 	//初始化数据和事件
 	var zixuanStr = $("input[name=zixuanStr]").val();
 	if(zixuanStr && zixuanStr != "") {
-		zixuanArr = zixuanStr.substr(1).split(",");
+		zixuanArr = zixuanStr.split(",");
 		for(var i=0;i<zixuanArr.length;i++){
 			qq_base_url += ",s_" + zixuanArr[i];
 		}
 	}
-	$(".stock_block").each(function(){
-		stockId = $(this).attr("id").split("_")[1];
-		stockArr.push(stockId);
-		qq_base_url += "," + stockId;
-		qq_flow_gegu_url += ",ff_" + stockId;
+	var trackStr = $("input[name=trackStr]").val();
+	if(trackStr && trackStr != "") {
+		trackArr = trackStr.split(",");
+		for(var i=0;i<trackArr.length;i++){
+			qq_base_url += "," + trackArr[i];
+			qq_flow_gegu_url += ",ff_" + trackArr[i];
+		}
+	}
+	
+	// 拖动添加跟踪
+	$(".stock_list .page_right .table_list").live("mousedown", function(e){
+		var jdom = $(e.target);
+		if(jdom[0].tagName == "IMG") {
+			drag_stock = jdom.parent().parent().find("a").attr("title");
+		}
 	});
+	$(".stock_list .page_left .stock_block").live("mouseup", function(e){
+		var jdom = $(e.target);
+		if(jdom[0].tagName == "IMG") {
+			drag_stock = jdom.parent().parent().find("a").attr("title");
+		}
+	});	
 	
 	// 切换分时图和日K线图
 	$("#t_d").click(function(){
@@ -42,6 +60,7 @@ $(document).ready(function(){
 //	});
 //	$(window).resize();
 	
+	// 数据定时器
 	fastData();
 	setInterval("fastData()", 3600);
 	mediumData();
@@ -56,7 +75,10 @@ function fastData() {
 			// 大盘
 			var shArr = v_s_sh000001.split('~');
 			var szArr = v_s_sz399001.split('~');
-			var msClass = shArr[5] >= 0? "up" : "down";
+			var msClass = "medium";
+			if(shArr[5] != 0){
+				msClass = shArr[5] > 0? "up" : "down";
+			}
 			var summary_html = "<span>上证指数:" + shArr[3] + "</span>";
 			summary_html += "<span>涨跌:" + shArr[5] + "%</span>";
 			summary_html += "<span>交易:" + shArr[7]/10000 + "亿</span>";
@@ -67,10 +89,13 @@ function fastData() {
 			$(".dapan").html(summary_html).parent(".summary").removeClass("up").removeClass("down").addClass(msClass);
 			
 			// 追踪个股
-			for(var i=0;i<stockArr.length;i++){
-				eval("var qqArr = v_" + stockArr[i] + ".split('~')");
+			for(var i=0;i<trackArr.length;i++){
+				eval("var qqArr = v_" + trackArr[i] + ".split('~')");
 				if(qqArr && qqArr.length > 1) {
-					var msClass = qqArr[32] >= 0? "up" : "down";
+					var msClass = "medium";
+					if(qqArr[32] != 0){
+						msClass = qqArr[32] > 0? "up" : "down";
+					}					
 					var summary_html = "<span><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank'>" + qqArr[1] + "</a>" + qqArr[2] + "</span>";
 					summary_html += "<span>昨:" + qqArr[4] + "</span>";
 					summary_html += "<span>开:" + qqArr[5] + "</span>";
@@ -89,7 +114,13 @@ function fastData() {
 			var html = "<table border='0' class='table_list'>";
 			for(var i=0;i<zixuanArr.length;i++){
 				eval("var qqArr = v_s_" + zixuanArr[i] + ".split('~')");
-				html += "<tr><td class='sname'><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank' title='" + qqArr[2] + "'>" + qqArr[1] + "</a></td>";
+        		var c = "medium";
+        		if(qqArr[5] != 0) {
+        			c = qqArr[5] > 0? "up" : "down";
+        		}				
+				html += "<tr class=" + c + ">";
+				html += "<td class='pic'><img src='1.png' title='拖动到左边查看详细' /></td>";
+				html += "<td class='sname'><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank' title='" + qqArr[2] + "'>" + qqArr[1] + "</a></td>";
 				html += "<td class='sfudu'>" + qqArr[3] + "</td>";
 				html += "<td class='sbaifen'>" + qqArr[5] + "%</td></tr>";
 			}
@@ -108,8 +139,8 @@ function mediumData() {
 	box_height = box_height/3*2;// 最大值高度设置为box高度的2/3
 	
 	$.ajax({url: qq_flow_gegu_url, dataType:"script", cache:false, success:function(){
-			for(var i=0;i<stockArr.length;i++){
-				eval("var qqArr = v_ff_" + stockArr[i] + ".split('~')");
+			for(var i=0;i<trackArr.length;i++){
+				eval("var qqArr = v_ff_" + trackArr[i] + ".split('~')");
 				if(qqArr && qqArr.length > 1) {
 					// 当日流动柱状图
 					var i_max = Math.max(qqArr[2], qqArr[3], qqArr[5], qqArr[6]);
@@ -186,11 +217,11 @@ function mediumData() {
 	});
 	
 	// 大单数据
-	for(var i=0;i<stockArr.length;i++){
+	for(var i=0;i<trackArr.length;i++){
 		(function(i){
 			// 概要
-			$.ajax({url: qq_dadan_summary + stockArr[i], dataType:"script", cache:false, success:function(){
-					eval("var qqArr = v_dadan_summary_" + stockArr[i] + "[12]");//100W，opt=10的项目，在返回数组的第12个元素上
+			$.ajax({url: qq_dadan_summary + trackArr[i], dataType:"script", cache:false, success:function(){
+					eval("var qqArr = v_dadan_summary_" + trackArr[i] + "[12]");//100W，opt=10的项目，在返回数组的第12个元素上
 					if(qqArr && qqArr.length > 1){
 						var html = "<div>100万以上概要<div>";
 						html += "<div>买：" + qqArr[4] + "手</div>";
@@ -202,8 +233,8 @@ function mediumData() {
 			});
 			
 			// 明细，查找500W以上的
-			$.ajax({url: qq_dadan_detail + stockArr[i], dataType:"script", cache:false, success:function(){
-					eval("var qqArr = (v_dadan_data_" + stockArr[i] + "[1]).split('^')");
+			$.ajax({url: qq_dadan_detail + trackArr[i], dataType:"script", cache:false, success:function(){
+					eval("var qqArr = (v_dadan_data_" + trackArr[i] + "[1]).split('^')");
 					var html = "<ul>";
 					html += "<li>500万以上明细<li>";
 					for(var j=0;j<qqArr.length;j++) {
@@ -221,8 +252,8 @@ function mediumData() {
 
 // 慢数据
 function slowData() {
-	for(var i=0;i<stockArr.length;i++){
+	for(var i=0;i<trackArr.length;i++){
 		// 分时K图
-		$(".map .tkmap").eq(i).attr("src", "http://image.sinajs.cn/newchart/min/n/" + stockArr[i] + ".gif&_=" + parseInt(100000*Math.random()));		
+		$(".map .tkmap").eq(i).attr("src", "http://image.sinajs.cn/newchart/min/n/" + trackArr[i] + ".gif&_=" + parseInt(100000*Math.random()));		
 	}
 }

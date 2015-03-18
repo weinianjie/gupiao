@@ -10,8 +10,8 @@
     $(document).ready(function(){
 
     	// 修改股票代码的时候重置track为0
-    	$("input[name=stockCode]").change(function(){
-    		$("input[name=track]").val("0");
+    	$("input[name=stockCode]").bind( 'input propertychange', function(){
+    		$("select[name=track]").val("0");
         });
         
     	// 新增
@@ -26,7 +26,7 @@
         	}
 
         	// 追踪序号
-        	data['track'] = $("input[name=track]").val();
+        	data['track'] = $("select[name=track]").val();
 
         	// 排序
         	data['priority'] = $("input[name=priority]").val().substr(0,16);
@@ -61,7 +61,7 @@
     		var tr = $(this).parent("td").parent("tr");
 			$("input[name=stockCode]").val(tr.find("td").eq(1).text());
 			$("input[name=priority]").val(tr.find("td").eq(3).text());
-			$("input[name=track]").val(tr.find("td").eq(4).text());
+			$("select[name=track]").val(tr.find("td").eq(4).text());
         });
 
         // 删除
@@ -79,7 +79,19 @@
   <form action="#" style="width:100%; border:solid 1px #ccc;">
   	<span>股票代码</span><input type="text" name="stockCode" />
   	<span>排序</span><input type="text" name="priority" />
-  	<input type="hidden" name="track" value="0" />
+  	<span>追踪序号
+	  	<select name="track">
+	  		<option value="0">0</option>
+	  		<option value="1">1</option>
+	  		<option value="2">2</option>
+	  		<option value="3">3</option>
+	  		<option value="4">4</option>
+	  		<option value="5">5</option>
+	  		<option value="6">6</option>
+	  		<option value="7">7</option>
+	  		<option value="8">8</option>
+	  	</select>
+  	</span>
   	<input type="button" class="add" value="确定" />
   </form>
   <?php

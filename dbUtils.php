@@ -85,7 +85,7 @@ class DbUtils {
 			}
 		}
 		$this->closeConnect();
-		return $stockList;
+		return false;
 	}
 
 	// 删除
@@ -101,7 +101,23 @@ class DbUtils {
 			}
 		}
 		$this->closeConnect();
-		return $stockList;
+		return false;
+	}	
+	
+	// 修改追踪排序
+	public function updateTrack($stockCode, $track) {
+		$stockList = array();
+		$this->openConnect();
+		if($this->connection){
+			$sql = "update stock set track=".$track.", uts=now() where stockCode='".$stockCode."'";
+			if(mysql_query($sql)) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+		$this->closeConnect();
+		return false;
 	}	
 }
 ?>

@@ -68,6 +68,14 @@ $(document).ready(function(){
 			mediumData();
 			slowData();
 			// 发送到后台保存
+			var data = {};
+			data['oldStock'] = curStockCode;
+			data['newStock'] = drag_stock;
+			data['newTrack'] = curTrack;
+			$.ajax({url:'action.php?fn=dragRelace', type:'post', data:data, success:function(rs){
+					console.info("追踪更新结果：" + rs);
+				}
+			});
 			
 		}
 		drag_stock = "";

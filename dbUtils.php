@@ -61,10 +61,10 @@ class DbUtils {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$query="select stockCode from stock where track!=0 order by priority limit 8";
+			$query="select stockCode,track from stock where track!=0 group by track order by priority limit 8";// group by 扣除重复
 			$result=mysql_query($query);//执行查询
 			while($result_row=mysql_fetch_row(($result))){
-				array_push($stockList, $result_row[0]);
+				array_push($stockList, $result_row[0]."_".$result_row[1]);
 			}		
 		}
 		$this->closeConnect();

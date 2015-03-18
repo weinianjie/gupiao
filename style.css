@@ -45,7 +45,7 @@ table {width:100%; height:100%; BORDER-COLLAPSE:collapse;}
 .stock_block .detail .dadan .deal ul li {border-bottom:dashed 1px #ccc;}
 .stock_list .page_right .table_list {width:140px; height:auto; text-align:right; margin-right:20px; line-height:22px;}
 .stock_list .page_right .table_list .pic {width:10px; text-align:left; vertical-align:middle;}
-.stock_list .page_right .table_list .pic img {cursor:pointer;}
+.stock_list .page_right .table_list .pic a {background-color:blue; cursor:pointer; width:10px; height:10px; display:block; margin-top:2px;}
 .stock_list .page_right .table_list .sname {width:48px; text-align:left;}
 .stock_list .page_right .table_list .sfudu {width:30px;}
 .stock_list .page_right .table_list .sbaifen {}

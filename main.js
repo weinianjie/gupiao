@@ -12,7 +12,6 @@ var drag_stock = "";
 
 //var a = ((("37.79" - "37.15") / "37.15" * 100) + "_").substr(0,4);
 //alert(a);
-
 $(document).ready(function(){
 	//初始化数据和事件
 	var zixuanStr = $("input[name=zixuanStr]").val();
@@ -24,25 +23,54 @@ $(document).ready(function(){
 	}
 	var trackStr = $("input[name=trackStr]").val();
 	if(trackStr && trackStr != "") {
-		trackArr = trackStr.split(",");
-		for(var i=0;i<trackArr.length;i++){
-			qq_base_url += "," + trackArr[i];
-			qq_flow_gegu_url += ",ff_" + trackArr[i];
+		_trackArr = trackStr.split(",");
+		for(var i=0;i<_trackArr.length;i++){
+			_tArr = _trackArr[i].split("_");
+			trackArr.push({"stockId" : _tArr[0], "track" : _tArr[1]});
+			qq_base_url += "," + _tArr[0];
+			qq_flow_gegu_url += ",ff_" + _tArr[0];
 		}
 	}
 	
 	// 拖动添加跟踪
 	$(".stock_list .page_right .table_list").live("mousedown", function(e){
 		var jdom = $(e.target);
-		if(jdom[0].tagName == "IMG") {
-			drag_stock = jdom.parent().parent().find("a").attr("title");
+		if(jdom.hasClass("IMG")) {
+			drag_stock = jdom.parent().parent().find(".sname a").attr("title");
 		}
 	});
-	$(".stock_list .page_left .stock_block").live("mouseup", function(e){
-		var jdom = $(e.target);
-		if(jdom[0].tagName == "IMG") {
-			drag_stock = jdom.parent().parent().find("a").attr("title");
+	$(document).live("mouseup", function(e){
+		var jdom = $(e.target).closest(".stock_block");
+		if(drag_stock != "" && jdom.length > 0){// 判断是否为.stock_block的子元素或自身
+			var curStockCode = "";
+			var curTrack = jdom.index(".stock_block") + 1;
+			// 原来有跟踪则先移除			
+			var as = jdom.find("a");
+			if(as.size() > 0) {
+				curStockCode = as.eq(0).attr("title");
+				var curStockId = curStockCode.indexOf("6") == 0? "sh"+curStockCode:"sz"+curStockCode;
+				for(var i=0;i<trackArr.length;i++) {
+					if(trackArr[i]['stockId'] == curStockId) {
+						trackArr.splice(i, 1);
+						qq_base_url = qq_base_url.replace("\," + curStockId, "");
+						qq_flow_gegu_url = qq_flow_gegu_url.replace("\,ff_" + curStockId, "");
+						break;
+					}
+				}
+			}
+			// 新增当前要跟踪的
+			var dragStockId = drag_stock.indexOf("6") == 0? "sh"+drag_stock:"sz"+drag_stock;
+			trackArr.push({"stockId":dragStockId,"track":curTrack});
+			qq_base_url += "," + dragStockId;
+			qq_flow_gegu_url += ",ff_" + dragStockId;
+			//立刻刷新
+			fastData();
+			mediumData();
+			slowData();
+			// 发送到后台保存
+			
 		}
+		drag_stock = "";
 	});	
 	
 	// 切换分时图和日K线图
@@ -90,23 +118,24 @@ function fastData() {
 			
 			// 追踪个股
 			for(var i=0;i<trackArr.length;i++){
-				eval("var qqArr = v_" + trackArr[i] + ".split('~')");
-				if(qqArr && qqArr.length > 1) {
+				eval("var qqArr = v_" + trackArr[i]['stockId'] + ".split('~')");
+				var stock_block = $(".stock_block").eq(trackArr[i]['track']-1);
+				if(qqArr && qqArr.length > 1 && stock_block.size() > 0) {
 					var msClass = "medium";
 					if(qqArr[32] != 0){
 						msClass = qqArr[32] > 0? "up" : "down";
 					}					
-					var summary_html = "<span><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank'>" + qqArr[1] + "</a>" + qqArr[2] + "</span>";
+					var summary_html = "<span><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' title='" + qqArr[2] + "' target='_blank'>" + qqArr[1] + "</a></span>";
 					summary_html += "<span>昨:" + qqArr[4] + "</span>";
 					summary_html += "<span>开:" + qqArr[5] + "</span>";
 					summary_html += "<span>当:" + qqArr[3] + "</span>";
 					summary_html += "<span>高:" + qqArr[33] + "</span>";
 					summary_html += "<span>低:" + qqArr[34] + "</span>";
 					summary_html += "<span>" + qqArr[32] + "%</span>";
-					$(".stock_block .gegu").eq(i).html(summary_html).removeClass("up").removeClass("down").addClass(msClass);
-					$(".today_flow .extends").eq(i).html("<span>净:" + qqArr[46] + "</span><span>盈:" + qqArr[39] + "</span>");
-					$(".money_flow .zong_value").eq(i).html("总:" + (qqArr[45] + "").split(".")[0] + "亿");
-					$(".money_flow .flow_value").eq(i).html("流:" + (qqArr[44] + "").split(".")[0] + "亿");
+					stock_block.find(".gegu").html(summary_html).removeClass("up").removeClass("down").addClass(msClass);
+					stock_block.find(".today_flow .extends").html("<span>净:" + qqArr[46] + "</span><span>盈:" + qqArr[39] + "</span>");
+					stock_block.find(".money_flow .zong_value").html("总:" + (qqArr[45] + "").split(".")[0] + "亿");
+					stock_block.find(".money_flow .flow_value").html("流:" + (qqArr[44] + "").split(".")[0] + "亿");
 				}
 			}
 			
@@ -119,7 +148,8 @@ function fastData() {
         			c = qqArr[5] > 0? "up" : "down";
         		}				
 				html += "<tr class=" + c + ">";
-				html += "<td class='pic'><img src='1.png' title='拖动到左边查看详细' /></td>";
+//				html += "<td class='pic'><img src='1.png' title='拖动到左边查看详细' /></td>";
+				html += "<td class='pic'><a class='IMG' title='拖动到左边查看详细'></a></td>";
 				html += "<td class='sname'><a href='http://stockhtm.finance.qq.com/sstock/ggcx/" + qqArr[2] + ".shtml' target='_blank' title='" + qqArr[2] + "'>" + qqArr[1] + "</a></td>";
 				html += "<td class='sfudu'>" + qqArr[3] + "</td>";
 				html += "<td class='sbaifen'>" + qqArr[5] + "%</td></tr>";
@@ -140,26 +170,27 @@ function mediumData() {
 	
 	$.ajax({url: qq_flow_gegu_url, dataType:"script", cache:false, success:function(){
 			for(var i=0;i<trackArr.length;i++){
-				eval("var qqArr = v_ff_" + trackArr[i] + ".split('~')");
-				if(qqArr && qqArr.length > 1) {
+				eval("var qqArr = v_ff_" + trackArr[i]['stockId'] + ".split('~')");
+				var stock_block = $(".stock_block").eq(trackArr[i]['track']-1);
+				if(qqArr && qqArr.length > 1 && stock_block.size() > 0) {
 					// 当日流动柱状图
 					var i_max = Math.max(qqArr[2], qqArr[3], qqArr[5], qqArr[6]);
-					$(".today_flow").eq(i).find(".view").eq(0).height(box_height*qqArr[1]/i_max);
-					$(".today_flow").eq(i).find(".view").eq(1).height(box_height*qqArr[2]/i_max);
-					$(".today_flow").eq(i).find(".view").eq(2).height(box_height*qqArr[5]/i_max);
-					$(".today_flow").eq(i).find(".view").eq(3).height(box_height*qqArr[6]/i_max);
-					$(".today_flow").eq(i).find(".word").eq(0).text(qqArr[1].split(".")[0]);
-					$(".today_flow").eq(i).find(".word").eq(1).text(qqArr[2].split(".")[0]);
-					$(".today_flow").eq(i).find(".word").eq(2).text(qqArr[5].split(".")[0]);
-					$(".today_flow").eq(i).find(".word").eq(3).text(qqArr[6].split(".")[0]);					
+					stock_block.find(".today_flow .view").eq(0).height(box_height*qqArr[1]/i_max);
+					stock_block.find(".today_flow .view").eq(1).height(box_height*qqArr[2]/i_max);
+					stock_block.find(".today_flow .view").eq(2).height(box_height*qqArr[5]/i_max);
+					stock_block.find(".today_flow .view").eq(3).height(box_height*qqArr[6]/i_max);
+					stock_block.find(".today_flow .word").eq(0).text(qqArr[1].split(".")[0]);
+					stock_block.find(".today_flow .word").eq(1).text(qqArr[2].split(".")[0]);
+					stock_block.find(".today_flow .word").eq(2).text(qqArr[5].split(".")[0]);
+					stock_block.find(".today_flow .word").eq(3).text(qqArr[6].split(".")[0]);					
 					
 					
 					
 					// 五日流动性
-					$(".stock_block").eq(i).find(".five_flow").eq(0).html((qqArr[3]/1 + qqArr[7]/1 + "").split(".")[0] + "万");
+					stock_block.find(".five_flow").eq(0).html((qqArr[3]/1 + qqArr[7]/1 + "").split(".")[0] + "万");
 					for(var j=14;j<=17;j++){
 						var qqArr2 = qqArr[j].split("^");
-						$(".stock_block").eq(i).find(".five_flow").eq(j-13).html((qqArr2[1]/1 - qqArr2[2]/1 + "").split(".")[0] + "万");
+						stock_block.find(".five_flow").eq(j-13).html((qqArr2[1]/1 - qqArr2[2]/1 + "").split(".")[0] + "万");
 					}
 				}
 			}
@@ -220,30 +251,34 @@ function mediumData() {
 	for(var i=0;i<trackArr.length;i++){
 		(function(i){
 			// 概要
-			$.ajax({url: qq_dadan_summary + trackArr[i], dataType:"script", cache:false, success:function(){
-					eval("var qqArr = v_dadan_summary_" + trackArr[i] + "[12]");//100W，opt=10的项目，在返回数组的第12个元素上
-					if(qqArr && qqArr.length > 1){
+			$.ajax({url: qq_dadan_summary + trackArr[i]['stockId'], dataType:"script", cache:false, success:function(){
+					eval("var qqArr = v_dadan_summary_" + trackArr[i]['stockId'] + "[12]");//100W，opt=10的项目，在返回数组的第12个元素上
+					var stock_block = $(".stock_block").eq(trackArr[i]['track']-1);
+					if(qqArr && qqArr.length > 1 && stock_block.size() > 0){
 						var html = "<div>100万以上概要<div>";
 						html += "<div>买：" + qqArr[4] + "手</div>";
 						html += "<div>卖：" + qqArr[5] + "手</div>";
 						html += "<div>中：" + qqArr[6] + "手</div>";
-						$(".stock_block .dadan .percent").eq(i).html(html);
+						stock_block.find(".dadan .percent").html(html);
 					}
 				}
 			});
 			
 			// 明细，查找500W以上的
-			$.ajax({url: qq_dadan_detail + trackArr[i], dataType:"script", cache:false, success:function(){
-					eval("var qqArr = (v_dadan_data_" + trackArr[i] + "[1]).split('^')");
-					var html = "<ul>";
-					html += "<li>500万以上明细<li>";
-					for(var j=0;j<qqArr.length;j++) {
-						var qqArr2 = qqArr[j].split("~");
-						if(qqArr2 && qqArr2.length > 1){
-							html += "<li>" + qqArr2[1] + "~" + qqArr2[2] + "~" + qqArr2[4].split(".")[0] + "~" + qqArr2[5] + "</li>";
+			$.ajax({url: qq_dadan_detail + trackArr[i]['stockId'], dataType:"script", cache:false, success:function(){
+					eval("var qqArr = (v_dadan_data_" + trackArr[i]['stockId'] + "[1]).split('^')");
+					var stock_block = $(".stock_block").eq(trackArr[i]['track']-1);
+					if(stock_block.size() > 0) {
+						var html = "<ul>";
+						html += "<li>500万以上明细<li>";
+						for(var j=0;j<qqArr.length;j++) {
+							var qqArr2 = qqArr[j].split("~");
+							if(qqArr2 && qqArr2.length > 1){
+								html += "<li>" + qqArr2[1] + "~" + qqArr2[2] + "~" + qqArr2[4].split(".")[0] + "~" + qqArr2[5] + "</li>";
+							}
 						}
+						stock_block.find(".dadan .deal").html(html+"</ul>");
 					}
-					$(".stock_block .dadan .deal").eq(i).html(html+"</ul>");
 				}
 			});				
 		}(i));
@@ -254,6 +289,9 @@ function mediumData() {
 function slowData() {
 	for(var i=0;i<trackArr.length;i++){
 		// 分时K图
-		$(".map .tkmap").eq(i).attr("src", "http://image.sinajs.cn/newchart/min/n/" + trackArr[i] + ".gif&_=" + parseInt(100000*Math.random()));		
+		var stock_block = $(".stock_block").eq(trackArr[i]['track']-1);
+		if(stock_block.size() > 0){
+			stock_block.find(".map .tkmap").attr("src", "http://image.sinajs.cn/newchart/min/n/" + trackArr[i]['stockId'] + ".gif&_=" + parseInt(100000*Math.random()));
+		}
 	}
 }

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <style type="text/css" >
+            html,body
+            {
+                height:100%;
+                width:100%;
+                padding:0;
+                margin:0;
+            }
+            
+            .dialog
+            {
+                width:250px;
+                height:250px;
+                position:absolute;
+                background-color:#ccc;
+                -webkit-box-shadow:1px 1px 3px #292929;
+                -moz-box-shadow:1px 1px 3px #292929;
+                box-shadow:1px 1px 3px #292929;
+                margin:10px;
+            }
+            
+            .dialog-title
+            {
+                color:#fff;
+                background-color:#404040;
+                font-size:12pt;
+                font-weight:bold;
+                padding:4px 6px;
+                cursor:move;
+            }
+            
+            .dialog-content
+            {
+                padding:4px;
+            }
+        </style>
+        <script type="text/javascript">
+        window.onload=function(){
+	        var isDialogTitle=false;
+	            
+	            function down(e){
+	                if(e.target.className.indexOf('dialog-title')!=-1){
+	                    isDialogTitle=true;
+	                }
+	            }
+	            
+	            function move(e){
+	                var dialog=document.getElementById('dlgTest');
+	                if(isDialogTitle){//只有点击Dialog Title的时候才能拖动
+	                    dialog.style.left=e.clientX+'px';
+	                    dialog.style.top=e.clientY+'px';
+	                }
+	            }
+	            
+	            function up(e){
+	                isDialogTitle=false;
+	            }
+	            
+	            document.addEventListener('mousedown',down);
+	            document.addEventListener('mousemove',move);
+	            document.addEventListener('mouseup',up);
+        	}
+            </script>
+    </head>
+    <body>
+        <div id="dlgTest" class="dialog">
+            <div class="dialog-title">Dialog</div>
+            <div class="dialog-content">
+                This is a draggable test.
+            </div>
+        </div>
+    </body>
+</html>

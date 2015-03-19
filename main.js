@@ -37,6 +37,8 @@ $(document).ready(function(){
 		var jdom = $(e.target);
 		if(jdom.hasClass("IMG")) {
 			drag_stock = jdom.parent().parent().find(".sname a").attr("title");
+			$(document).bind("selectstart",function(){return false;});// 禁止选中文字
+			$("body").css({cursor:"move"});// 改变鼠标样式
 		}
 	});
 	$(document).live("mouseup", function(e){
@@ -79,6 +81,8 @@ $(document).ready(function(){
 			
 		}
 		drag_stock = "";
+		$(document).unbind("selectstart");// 解除禁止选中文字
+		$("body").css({cursor:"default"});// 接触改变鼠标样式
 	});	
 	
 	// 切换分时图和日K线图

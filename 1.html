@@ -1,13 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
+<script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript">
 window.onload = function(){
-	opener.document.location.reload();   
-	window.close();
+	$("img").mousedown(function(){
+		console.info(1);
+	});
+	$(document).mouseup(function(){
+		console.info(2);
+	});
 }
 </script>
 </head>
 <body>
+<div>
+<img src="1.png"/>
+</div>
 </body>
 </html>

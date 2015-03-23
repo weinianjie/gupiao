@@ -1,7 +1,7 @@
 <?php
 class DbUtils {
 	private $connection = null;
-// 	private $db_host='127.0.0.1';
+ 	private $db_host='127.0.0.1';
 // 	private $db_username='a0226150238';
 // 	private $db_password='92395451';
 // 	private $db_database='a0226150238';

@@ -38,6 +38,7 @@
 	        			eval("var qqArr = v_s_" + stockId + ".split('~')");
 	        			if(qqArr && qqArr.length > 0) {
 	            			data['stockName'] = qqArr[1];
+	            			console.info(data['stockCode'] + "|" + data['stockName'] + "|" + data['track'] + "|" + data['priority']);
 			            	$.ajax({url:'action.php?fn=addOrUpdate', type:'post', data:data, success:function(rs){
 				            		if(rs == "1") {
 					            		alert("操作成功");

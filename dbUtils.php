@@ -76,8 +76,8 @@ class DbUtils {
 		$stockList = array();
 		$this->openConnect();
 		if($this->connection){
-			$sql = "insert into stock values('".$stockCode."','".$stockName."',".$track.",".$priority.",now(),now()) ";
-			$sql .= "on duplicate key update stockName='".$stockName."', track=".$track.", priority=".$priority.", uts=now()";
+			$sql = "insert into stock values('".$stockCode."','".$stockName."',".$track.",'".$priority."',now(),now()) ";
+			$sql .= "on duplicate key update stockName='".$stockName."', track=".$track.", priority='".$priority."', uts=now()";
 			if(mysql_query($sql)) {
 				return true;
 			}else {

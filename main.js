@@ -126,7 +126,7 @@ function fastData() {
 			summary_html += "<span>深证指数:" + szArr[3] + "</span>";
 			summary_html += "<span>涨跌:" + szArr[5] + "%</span>";
 			summary_html += "<span>交易:" + szArr[7]/10000 + "亿</span>";
-			$(".dapan").html(summary_html).parent(".summary").removeClass("up").removeClass("down").addClass(msClass);
+			$(".dapan").html(summary_html).parent(".summary").removeClass("medium").removeClass("up").removeClass("down").addClass(msClass);
 			
 			// 追踪个股
 			for(var i=0;i<trackArr.length;i++){
@@ -144,7 +144,7 @@ function fastData() {
 					summary_html += "<span>高:" + qqArr[33] + "</span>";
 					summary_html += "<span>低:" + qqArr[34] + "</span>";
 					summary_html += "<span>" + qqArr[32] + "%</span>";
-					stock_block.find(".gegu").html(summary_html).removeClass("up").removeClass("down").addClass(msClass);
+					stock_block.find(".gegu").html(summary_html).removeClass("medium").removeClass("up").removeClass("down").addClass(msClass);
 					stock_block.find(".today_flow .extends").html("<span>净:" + qqArr[46] + "</span><span>盈:" + qqArr[39] + "</span>");
 					stock_block.find(".money_flow .zong_value").html("总:" + (qqArr[45] + "").split(".")[0] + "亿");
 					stock_block.find(".money_flow .flow_value").html("流:" + (qqArr[44] + "").split(".")[0] + "亿");
